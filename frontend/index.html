@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resume Builder AI</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header>
+    <nav class="navbar">
+      <div class="navbar-title">Resume Builder AI</div>
+      <div class="navbar-actions">
+        <button id="preview-btn" class="btn btn-accent">Preview</button>
+        <button id="auth-btn" class="btn btn-primary">Login / Signup</button>
+      </div>
+    </nav>
+  </header>
+  <main>
+    <form id="resume-form">
+      <section class="section" id="personal-info-section">
+        <h2>Personal Info</h2>
+        <div class="form-row">
+          <input type="text" name="name" placeholder="Full Name" required>
+          <input type="email" name="email" placeholder="Email" required>
+        </div>
+        <div class="form-row">
+          <input type="tel" name="phone" placeholder="Phone" required>
+          <input type="url" name="linkedin" placeholder="LinkedIn URL">
+          <input type="url" name="github" placeholder="GitHub URL">
+        </div>
+        <div class="form-row">
+          <input type="text" name="city" placeholder="City">
+        </div>
+      </section>
+      <section class="section" id="summary-section">
+        <h2>Summary</h2>
+        <div class="form-row">
+          <textarea name="summary" rows="3" placeholder="Write a short summary..."></textarea>
+          <button type="button" id="ai-summary-btn" class="btn btn-secondary">✨ Enhance with AI</button>
+        </div>
+      </section>
+      <section class="section" id="education-section">
+        <h2>Education</h2>
+        <div id="education-entries"></div>
+        <button type="button" class="btn btn-accent" id="add-education-btn">Add Education</button>
+      </section>
+      <section class="section" id="work-section">
+        <h2>Work Experience</h2>
+        <div id="work-entries"></div>
+        <button type="button" class="btn btn-accent" id="add-work-btn">Add Work Experience</button>
+      </section>
+      <section class="section" id="projects-section">
+        <h2>Projects</h2>
+        <div id="project-entries"></div>
+        <button type="button" class="btn btn-accent" id="add-project-btn">Add Project</button>
+      </section>
+      <section class="section" id="skills-section">
+        <h2>Skills</h2>
+        <div id="skills-entries"></div>
+        <button type="button" class="btn btn-accent" id="add-skill-btn">Add Skill</button>
+      </section>
+      <section class="section" id="certifications-section">
+        <h2>Certifications</h2>
+        <div id="certifications-entries"></div>
+        <button type="button" class="btn btn-accent" id="add-certification-btn">Add Certification</button>
+      </section>
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Save Resume</button>
+      </div>
+    </form>
+  </main>
+  <!-- Preview Modal -->
+  <div id="preview-modal" class="modal hidden">
+    <div class="modal-content">
+      <span class="close" id="close-preview">&times;</span>
+      <div id="preview-content"></div>
+    </div>
+  </div>
+  <!-- Auth Modal -->
+  <div id="auth-modal" class="modal hidden">
+    <div class="modal-content">
+      <span class="close" id="close-auth">&times;</span>
+      <div id="auth-content">
+        <!-- Login/Signup form will be rendered here -->
+      </div>
+    </div>
+  </div>
+  <script src="js/main.js"></script>
+</body>
+</html>

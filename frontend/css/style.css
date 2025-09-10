@@ -1,0 +1,171 @@
+:root {
+  --base-100: #ffffff;
+  --base-200: #f2f2f2;
+  --base-300: #e6e6e6;
+  --primary: #570df8;
+  --secondary: #f000b8;
+  --accent: #37cdbe;
+  --neutral: #3d4451;
+  --info: #3abff8;
+  --success: #36d399;
+  --warning: #fbbd23;
+  --error: #f87272;
+}
+
+body {
+  background: var(--base-200);
+  color: var(--neutral);
+  font-family: 'Segoe UI', Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  background: var(--base-100);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  padding: 0.5rem 0;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.navbar-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--primary);
+}
+
+.navbar-actions .btn {
+  margin-left: 0.5rem;
+}
+
+main {
+  max-width: 900px;
+  margin: 2rem auto;
+  background: var(--base-100);
+  border-radius: 8px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+  padding: 2rem;
+}
+
+.section {
+  margin-bottom: 2rem;
+}
+
+.section h2 {
+  color: var(--primary);
+  margin-bottom: 0.5rem;
+}
+
+.form-row {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+input, textarea, select {
+  padding: 0.5rem;
+  border: 1px solid var(--base-300);
+  border-radius: 4px;
+  font-size: 1rem;
+  background: var(--base-200);
+  color: var(--neutral);
+  flex: 1 1 200px;
+}
+
+input:focus, textarea:focus, select:focus {
+  outline: 2px solid var(--primary);
+  background: var(--base-100);
+}
+
+.btn {
+  padding: 0.5rem 1.2rem;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: #fff;
+}
+
+.btn-secondary {
+  background: var(--secondary);
+  color: #fff;
+}
+
+.btn-accent {
+  background: var(--accent);
+  color: #fff;
+}
+
+.btn:active {
+  opacity: 0.9;
+}
+
+.form-actions {
+  text-align: right;
+}
+
+.modal {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal.hidden {
+  display: none;
+}
+
+.modal-content {
+  background: var(--base-100);
+  padding: 2rem;
+  border-radius: 8px;
+  min-width: 320px;
+  max-width: 600px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.12);
+  position: relative;
+}
+
+.close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-size: 1.5rem;
+  color: var(--neutral);
+  cursor: pointer;
+}
+
+@media (max-width: 600px) {
+  main {
+    padding: 0.5rem;
+  }
+  .modal-content {
+    padding: 1rem;
+    min-width: 90vw;
+  }
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .form-row {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}
+
+/* Additional styles for dynamic entries, buttons, etc. can be added here */
