@@ -8,8 +8,19 @@
  */
 async function login(username, password) {
   console.log('login called', username);
-  // TODO: Implement login API call
-  return Promise.resolve({});
+  try {
+    const res = await fetch('/api/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, password })
+    });
+
+    if (!res.ok) throw new Error('Login failed');
+    return await res.json();
+  } catch (err) {
+    console.error('Login error:', err);
+    return Promise.resolve({});
+  }
 }
 
 /**
@@ -20,6 +31,20 @@ async function login(username, password) {
  * @returns {Promise<Object>}
  */
 async function register(username, email, password) {
+  console.log('register called', username, email);
+  try {
+    const res = await fetch('/api/auth/register', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, email, password })
+    });
+
+    if (!res.ok) throw new Error('Registration failed');
+    return await res.json();
+  } catch (err) {
+    console.error('Register error:', err);
+    return Promise.resolve({});
+  }
   console.log("register called", username, email);
   // TODO: Implement register API call
   return Promise.resolve({});
@@ -32,8 +57,19 @@ async function register(username, email, password) {
  */
 async function saveResume(resumeData) {
   console.log("saveResume called", resumeData);
-  // TODO: Implement save resume API call
-  return Promise.resolve({});
+  try {
+    const res = await fetch('/api/resumes', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(resumeData)
+    });
+
+    if (!res.ok) throw new Error('Failed to save resume');
+    return await res.json();
+  } catch (err) {
+    console.error('Save resume error:', err);
+    return Promise.resolve({});
+  }
 }
 
 /**
@@ -42,7 +78,7 @@ async function saveResume(resumeData) {
  * @returns {Promise<Object>}
  */
 async function getResumeById(id) {
-  console.log("getResumeById called", id);
+  console.log('getResumeById called', id);
   // TODO: Implement get resume API call
   return Promise.resolve({});
 
@@ -53,10 +89,9 @@ async function getResumeById(id) {
     if (!res.ok) throw new Error('Resume not found');
     return await res.json();
   } catch (err) {
-    console.error(err);
-    return null;
+    console.error('Get resume error:', err);
+    return Promise.resolve({});
   }
-  */
 }
 
 /**
@@ -65,7 +100,18 @@ async function getResumeById(id) {
  * @returns {Promise<Object>}
  */
 async function callAiEnhance(prompt) {
-  console.log("callAiEnhance called", prompt);
-  // TODO: Implement AI enhance API call
-  return Promise.resolve({});
+  console.log('callAiEnhance called', prompt);
+  try {
+    const res = await fetch('/api/ai/enhance-summary', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ prompt })
+    });
+
+    if (!res.ok) throw new Error('AI enhancement failed');
+    return await res.json();
+  } catch (err) {
+    console.error('AI enhance error:', err);
+    return Promise.resolve({});
+  }
 }
