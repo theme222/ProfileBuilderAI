@@ -15,24 +15,23 @@
 body {
   background: var(--base-200);
   color: var(--neutral);
-  font-family: 'Segoe UI', Arial, sans-serif;
+  font-family: "Segoe UI", Arial, sans-serif;
   margin: 0;
   padding: 0;
 }
 
 header {
   background: var(--base-100);
-  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
   padding: 0.5rem 0;
 }
 
 .navbar {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 0 1rem;
+  width: 100%;
+  padding: 1rem 2rem;
 }
 
 .navbar-title {
@@ -41,8 +40,10 @@ header {
   color: var(--primary);
 }
 
-.navbar-actions .btn {
-  margin-left: 0.5rem;
+.navbar-actions {
+  display: flex;
+  justify-content: space-around;
+  width: 17rem;
 }
 
 main {
@@ -50,7 +51,7 @@ main {
   margin: 2rem auto;
   background: var(--base-100);
   border-radius: 8px;
-  box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.06);
   padding: 2rem;
 }
 
@@ -70,7 +71,9 @@ main {
   flex-wrap: wrap;
 }
 
-input, textarea, select {
+input,
+textarea,
+select {
   padding: 0.5rem;
   border: 1px solid var(--base-300);
   border-radius: 4px;
@@ -80,7 +83,9 @@ input, textarea, select {
   flex: 1 1 200px;
 }
 
-input:focus, textarea:focus, select:focus {
+input:focus,
+textarea:focus,
+select:focus {
   outline: 2px solid var(--primary);
   background: var(--base-100);
 }
@@ -119,8 +124,11 @@ input:focus, textarea:focus, select:focus {
 
 .modal {
   position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0,0,0,0.3);
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.3);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -137,7 +145,7 @@ input:focus, textarea:focus, select:focus {
   border-radius: 8px;
   min-width: 320px;
   max-width: 600px;
-  box-shadow: 0 2px 16px rgba(0,0,0,0.12);
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.12);
   position: relative;
 }
 
@@ -151,7 +159,9 @@ input:focus, textarea:focus, select:focus {
 }
 
 @media (max-width: 600px) {
-  main {
+  /*IMPLEMENT PHONE MODE HERE*/
+
+  /* main {
     padding: 0.5rem;
   }
   .modal-content {
@@ -165,7 +175,7 @@ input:focus, textarea:focus, select:focus {
   .form-row {
     flex-direction: column;
     gap: 0.5rem;
-  }
+  } */
 }
 
 /* Additional styles for dynamic entries, buttons, etc. can be added here */

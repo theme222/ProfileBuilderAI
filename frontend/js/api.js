@@ -20,7 +20,7 @@ async function login(username, password) {
  * @returns {Promise<Object>}
  */
 async function register(username, email, password) {
-  console.log('register called', username, email);
+  console.log("register called", username, email);
   // TODO: Implement register API call
   return Promise.resolve({});
 }
@@ -31,7 +31,7 @@ async function register(username, email, password) {
  * @returns {Promise<Object>}
  */
 async function saveResume(resumeData) {
-  console.log('saveResume called', resumeData);
+  console.log("saveResume called", resumeData);
   // TODO: Implement save resume API call
   return Promise.resolve({});
 }
@@ -42,7 +42,7 @@ async function saveResume(resumeData) {
  * @returns {Promise<Object>}
  */
 async function getResumeById(id) {
-  console.log('getResumeById called', id);
+  console.log("getResumeById called", id);
   // TODO: Implement get resume API call
   return Promise.resolve({});
 
@@ -65,7 +65,7 @@ async function getResumeById(id) {
  * @returns {Promise<Object>}
  */
 async function callAiEnhance(prompt) {
-  console.log('callAiEnhance called', prompt);
+  console.log("callAiEnhance called", prompt);
   // TODO: Implement AI enhance API call
   return Promise.resolve({});
 }
