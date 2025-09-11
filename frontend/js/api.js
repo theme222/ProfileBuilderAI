@@ -1,4 +1,6 @@
 // api.js
+const { setAuthCookie, authData } = require('./auth.js');
+const { API_BACKEND_URL } = require('./config.js');
 
 /**
  * Logs in a user.
@@ -9,7 +11,7 @@
 async function login(username, password) {
   console.log('login called', username);
   try {
-    const res = await fetch('/api/auth/login', {
+    const res = await fetch(`${API_BACKEND_URL}/api/auth/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username, password })
@@ -33,21 +35,27 @@ async function login(username, password) {
 async function register(username, email, password) {
   console.log('register called', username, email);
   try {
-    const res = await fetch('/api/auth/register', {
+    const res = await fetch(`${API_BACKEND_URL}/api/auth/register`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username, email, password })
+      body: JSON.stringify({ username, password })
     });
 
     if (!res.ok) throw new Error('Registration failed');
-    return await res.json();
+
+    const data = await res.json(); // Expecting { success: true, cookie: '...' }
+
+    // TODO: Notify user here about success or failure
+    if (!data.success) throw new Error('Registration failed');
+
+    setAuthCookie(data.cookie);
+    authData.username = username;
+    console.log("Registration successful", data);
+
   } catch (err) {
     console.error('Register error:', err);
     return Promise.resolve({});
   }
-  console.log("register called", username, email);
-  // TODO: Implement register API call
-  return Promise.resolve({});
 }
 
 /**
@@ -58,7 +66,7 @@ async function register(username, email, password) {
 async function saveResume(resumeData) {
   console.log("saveResume called", resumeData);
   try {
-    const res = await fetch('/api/resumes', {
+    const res = await fetch(`${API_BACKEND_URL}/api/resumes`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(resumeData)
@@ -68,7 +76,6 @@ async function saveResume(resumeData) {
     return await res.json();
   } catch (err) {
     console.error('Save resume error:', err);
-    return Promise.resolve({});
   }
 }
 
@@ -79,18 +86,13 @@ async function saveResume(resumeData) {
  */
 async function getResumeById(id) {
   console.log('getResumeById called', id);
-  // TODO: Implement get resume API call
-  return Promise.resolve({});
 
-  /*
-  // Example implementation:
   try {
-    const res = await fetch(`/api/resumes/${id}`);
+    const res = await fetch(`${API_BACKEND_URL}/api/resumes/${id}`);
     if (!res.ok) throw new Error('Resume not found');
     return await res.json();
   } catch (err) {
     console.error('Get resume error:', err);
-    return Promise.resolve({});
   }
 }
 
@@ -102,7 +104,7 @@ async function getResumeById(id) {
 async function callAiEnhance(prompt) {
   console.log('callAiEnhance called', prompt);
   try {
-    const res = await fetch('/api/ai/enhance-summary', {
+    const res = await fetch(`${API_BACKEND_URL}/api/ai/enhance-summary`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ prompt })
@@ -112,6 +114,5 @@ async function callAiEnhance(prompt) {
     return await res.json();
   } catch (err) {
     console.error('AI enhance error:', err);
-    return Promise.resolve({});
   }
 }
