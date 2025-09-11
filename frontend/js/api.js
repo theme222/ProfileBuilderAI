@@ -1,6 +1,6 @@
 // api.js
-const { setAuthCookie, authData } = require('./auth.js');
-const { API_BACKEND_URL } = require('./config.js');
+import { setAuthCookie, authData } from './auth.js';
+import { API_BACKEND_URL } from './config.js';
 
 /**
  * Logs in a user.

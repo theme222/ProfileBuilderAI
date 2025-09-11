@@ -1,15 +1,22 @@
 // main.js
+import { openModal, closeModal, addDynamicEntry, removeDynamicEntry } from './ui.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   console.log('App initialized');
-  // Add event listeners to major buttons
-  document.getElementById('preview-btn').addEventListener('click', () => {
-    // Delegate to UI
+
+  document.getElementById('preview-btn').addEventListener('click', function() {
     openModal('preview-modal');
   });
-  document.getElementById('auth-btn').addEventListener('click', () => {
+  document.getElementById('auth-btn').addEventListener('click', function() {
     openModal('auth-modal');
   });
+  document.getElementById('close-preview').addEventListener('click', function() {
+    closeModal('preview-modal');
+  });
+  document.getElementById('close-auth').addEventListener('click', function() {
+    closeModal('auth-modal');
+  });
+  
   document.getElementById('ai-summary-btn').addEventListener('click', () => {
     // Delegate to API
     // callAiEnhance(...)

@@ -1,7 +1,7 @@
 import config from './config.js';
 
 const authData = {
-    username: 'testuser'
+    username: undefined
 }
 
 

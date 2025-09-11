@@ -31,12 +31,12 @@ header {
   justify-content: space-around;
   align-items: center;
   width: 100%;
-  padding: 1rem 2rem;
+  padding: 1rem 0;
 }
 
 .navbar-title {
-  font-size: 1.5rem;
-  font-weight: bold;
+  font-size: 2rem;
+  font-weight: bolder;
   color: var(--primary);
 }
 
@@ -52,7 +52,7 @@ main {
   background: var(--base-100);
   border-radius: 8px;
   box-shadow: 0 2px 16px rgba(0, 0, 0, 0.06);
-  padding: 2rem;
+  padding: 0.5rem 1rem;
 }
 
 .section {
@@ -61,7 +61,8 @@ main {
 
 .section h2 {
   color: var(--primary);
-  margin-bottom: 0.5rem;
+  font-size: 1.5rem;
+  margin: 1rem 0;
 }
 
 .form-row {
@@ -114,6 +115,18 @@ select:focus {
   color: #fff;
 }
 
+.btn-outline-secondary {
+  background: #fff;
+  color: var(--secondary);
+  border: 2px solid var(--secondary);
+  transition: background 0.2s, color 0.2s;
+}
+
+.btn-outline-secondary:hover, .btn-outline-secondary:focus {
+  background: var(--secondary);
+  color: #fff;
+}
+
 .btn:active {
   opacity: 0.9;
 }
@@ -143,10 +156,19 @@ select:focus {
   background: var(--base-100);
   padding: 2rem;
   border-radius: 8px;
+  width: 100%;
+  max-width: 420px;
   min-width: 320px;
-  max-width: 600px;
   box-shadow: 0 2px 16px rgba(0, 0, 0, 0.12);
   position: relative;
+  height: auto;
+  margin: 0 1rem;
+}
+
+.modal-content h2 {
+  margin-top: 0;
+  color: var(--primary);
+  text-align: center;
 }
 
 .close {
@@ -156,6 +178,29 @@ select:focus {
   font-size: 1.5rem;
   color: var(--neutral);
   cursor: pointer;
+}
+
+.auth-form {
+  max-width: 40rem;
+  max-height: 30rem;
+  background: var(--base-100);
+  border-radius: 8px;
+  padding: 1rem;
+}
+.auth-form .form-row {
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+}
+.form-row {
+  height: 2.5rem;
+
+}
+
+.auth-form .form-actions {
+  margin-top: 1.5rem;
 }
 
 @media (max-width: 600px) {
@@ -176,6 +221,12 @@ select:focus {
     flex-direction: column;
     gap: 0.5rem;
   } */
+  .modal-content {
+    padding: 1rem;
+    min-width: 0;
+    max-width: 98vw;
+    width: 98vw;
+  }
 }
 
 /* Additional styles for dynamic entries, buttons, etc. can be added here */

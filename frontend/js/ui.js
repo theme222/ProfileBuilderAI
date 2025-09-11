@@ -4,18 +4,25 @@
  * Opens a modal by ID.
  * @param {string} modalId
  */
-function openModal(modalId) {
-  console.log(`openModal called for ${modalId}`);
-  // TODO: Show modal
+export function openModal(modalId) {
+  const modal = document.getElementById(modalId);
+  if (modal) {
+    modal.classList.remove('hidden');
+    if (modalId === 'auth-modal') {
+      renderAuthForm();
+    }
+  }
 }
 
 /**
  * Closes a modal by ID.
  * @param {string} modalId
  */
-function closeModal(modalId) {
-  console.log(`closeModal called for ${modalId}`);
-  // TODO: Hide modal
+export function closeModal(modalId) {
+  const modal = document.getElementById(modalId);
+  if (modal) {
+    modal.classList.add('hidden');
+  }
 }
 
 /**
@@ -31,7 +38,7 @@ function renderPreview(resumeData) {
  * Adds a dynamic entry (education, work, etc.)
  * @param {string} sectionType
  */
-function addDynamicEntry(sectionType) {
+export function addDynamicEntry(sectionType) {
   console.log(`addDynamicEntry called for ${sectionType}`);
   // TODO: Add entry fields to DOM
 }
@@ -40,17 +47,29 @@ function addDynamicEntry(sectionType) {
  * Removes a dynamic entry.
  * @param {HTMLElement} element
  */
-function removeDynamicEntry(element) {
+export function removeDynamicEntry(element) {
   console.log("removeDynamicEntry called", element);
   // TODO: Remove entry from DOM
 }
 
-// Example implementation (commented out):
-/*
-function openModal(modalId) {
-  const modal = document.getElementById(modalId);
-  if (modal) {
-    modal.classList.remove('hidden');
-  }
+
+function renderAuthForm() {
+  const authContent = document.getElementById('auth-content');
+  if (!authContent) return;
+  authContent.innerHTML = `
+    <form id="auth-form" class="auth-form">
+      <div class="form-row">
+        <input type="text" name="username" placeholder="Username" required autocomplete="username">
+      </div>
+      <div class="form-row">
+        <input type="email" name="email" placeholder="Email" required autocomplete="email">
+      </div>
+      <div class="form-row">
+        <input type="password" name="password" placeholder="Password" required autocomplete="current-password">
+      </div>
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary" style="width: 100%;">Continue</button>
+      </div>
+    </form>
+  `;
 }
-*/

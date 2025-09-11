@@ -30,14 +30,16 @@
           <input type="url" name="github" placeholder="GitHub URL">
         </div>
         <div class="form-row">
-          <input type="text" name="city" placeholder="City">
+          <input type="text" name="Address" placeholder="Address">
         </div>
       </section>
-      <section class="section" id="summary-section">
+      <section class="section" id="summary-section" style="height: 11rem">
         <h2>Summary</h2>
         <div class="form-row">
-          <textarea name="summary" rows="3" placeholder="Write a short summary..."></textarea>
-          <button type="button" id="ai-summary-btn" class="btn btn-secondary">✨ Enhance with AI</button>
+          <textarea name="summary" rows="6" placeholder="Write a short summary..."></textarea>
+          <button type="button" id="ai-summary-btn" class="btn btn-outline-secondary">
+            <img src="assets/sparkles.svg" alt="AI Enhance" style="width:1.2em;height:1.2em;vertical-align:middle;margin-right:0.4em;">AI Enhance
+          </button>
         </div>
       </section>
       <section class="section" id="education-section">
@@ -80,12 +82,13 @@
   <!-- Auth Modal -->
   <div id="auth-modal" class="modal hidden">
     <div class="modal-content">
+      <h2 >Login / Signup</h2>
       <span class="close" id="close-auth">&times;</span>
       <div id="auth-content">
         <!-- Login/Signup form will be rendered here -->
       </div>
     </div>
   </div>
-  <script src="js/main.js"></script>
+  <script src="js/main.js" type="module"></script>
 </body>
 </html>
