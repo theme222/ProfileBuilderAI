@@ -1,3 +1,5 @@
+import { UpperFirst } from "./misc.js";
+import { API_BACKEND_URL } from "./config.js";
 // ui.js
 
 /**
@@ -7,9 +9,15 @@
 export function openModal(modalId) {
   const modal = document.getElementById(modalId);
   if (modal) {
-    modal.classList.remove('hidden');
-    if (modalId === 'auth-modal') {
+    modal.classList.remove("hidden");
+    if (modalId === "auth-modal") {
       renderAuthForm();
+    }
+    if (modalId === "preview-modal") {
+      // Load resume data from backend and render
+      // For now, using dummy data
+      const dummyResume = { id: 123 }; // Replace with actual resume ID or data
+      renderPreview(dummyResume);
     }
   }
 }
@@ -21,7 +29,7 @@ export function openModal(modalId) {
 export function closeModal(modalId) {
   const modal = document.getElementById(modalId);
   if (modal) {
-    modal.classList.add('hidden');
+    modal.classList.add("hidden");
   }
 }
 
@@ -32,13 +40,13 @@ export function closeModal(modalId) {
 function renderPreview(resumeData) {
   console.log("renderPreview called", resumeData);
   // TODO: Render resume preview
-    // ✅ Call backend to load resume and then render
+  // ✅ Call backend to load resume and then render
   const previewContainer = document.getElementById("resume-preview");
   if (!previewContainer) return;
 
-  fetch(`/api/resumes/${resumeData.id}`, { credentials: "include" })
-    .then(res => res.json())
-    .then(data => {
+  fetch(`${API_BACKEND_URL}/api/resumes/${resumeData.id}`, { credentials: "include" })
+    .then((res) => res.json())
+    .then((data) => {
       previewContainer.innerHTML = `
         <h2>${data.name || "Your Name"}</h2>
         <p><strong>Email:</strong> ${data.email || ""}</p>
@@ -59,7 +67,7 @@ function renderPreview(resumeData) {
         </ul>
       `;
     })
-    .catch(err => console.error("Failed to render preview", err));
+    .catch((err) => console.error("Failed to render preview", err));
 }
 
 /**
@@ -70,22 +78,83 @@ export function addDynamicEntry(sectionType) {
   console.log(`addDynamicEntry called for ${sectionType}`);
   // TODO: Add entry fields to DOM
   // ✅ Still adds to DOM, but also persists to backend with PUT /api/resumes/:id
-  const container = document.getElementById(`${sectionType}-container`);
+  const container = document.getElementById(`${sectionType}-entries`);
   if (!container) return;
+
+  let placeholder;
+  switch (sectionType) {
+    case "education":
+      placeholder = {
+        role: "Degree (e.g. B.Tech in CSE)",
+        place: "School/University",
+        date: "Year(s) (e.g. 2021-2025)",
+        description: "Brief description, honors, or activities",
+      };
+      break;
+    case "work":
+    case "experience":
+      placeholder = {
+        role: "Job Title (e.g. Software Intern)",
+        place: "Company Name",
+        date: "Dates (e.g. Jun 2023 - Aug 2023)",
+        description: "Describe your responsibilities and achievements",
+      };
+      break;
+    case "projects":
+      placeholder = {
+        role: "Project Title",
+        place: "Tech Stack (e.g. React, Node.js)",
+        date: "Year or Duration",
+        description: "Project description and your role",
+      };
+      break;
+    case "skill":
+      placeholder = {
+        role: "Skill Name (e.g. Python)",
+        place: "Category (e.g. Programming Language)",
+        date: "",
+        description: "Proficiency or details (optional)",
+      };
+      break;
+    case "certification":
+      placeholder = {
+        role: "Certification Name",
+        place: "Issuing Organization",
+        date: "Date Earned",
+        description: "Credential ID or details (optional)",
+      };
+      break;
+    default:
+      placeholder = {
+        role: "Title/Role",
+        place: "Company/School",
+        date: "Date Range",
+        description: "Description",
+      };
+  }
 
   const entry = document.createElement("div");
   entry.className = "dynamic-entry";
   entry.innerHTML = `
-    <input type="text" name="${sectionType}-title" placeholder="Title/Role" required>
-    <input type="text" name="${sectionType}-subtitle" placeholder="Company/School" required>
-    <input type="text" name="${sectionType}-date" placeholder="Date range">
-    <textarea name="${sectionType}-description" placeholder="Description"></textarea>
-    <button type="button" class="btn btn-danger remove-btn">Remove</button>
+      <h3>
+        ${UpperFirst(sectionType)} Entry ${container.childElementCount + 1}
+        <div class="close remove-btn" style="font-size: 0.9rem;">X</div>
+      </h3>
+      <input type="text" name="${sectionType}-role" placeholder="${ placeholder.role }" value="" required>
+      <input type="text" name="${sectionType}-place" placeholder="${ placeholder.place }" value="" required>
+      <input type="text" name="${sectionType}-date" placeholder="${ placeholder.date }" value="">
+      <div class="textarea-container">
+      <textarea name="${sectionType}-description" placeholder="${ placeholder.description }"></textarea>
+      <button type="button" class="btn btn-outline-secondary btn-ai">
+        <img src="assets/sparkles.svg" alt="AI Enhance" style="width:1.2em;height:1.2em;vertical-align:middle;margin-right:0.4em;">AI Enhance
+      </button>
+      </div>
   `;
 
   entry.querySelector(".remove-btn").addEventListener("click", () => {
     removeDynamicEntry(entry);
   });
+  container.appendChild(entry);
 }
 
 /**
@@ -100,17 +169,16 @@ export function removeDynamicEntry(element) {
     element.parentNode.removeChild(element);
   }
 
-  fetch(`/api/resumes/123`, { // replace 123 with actual resumeId
-    method: "PUT",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ /* updated section array without this entry */ }),
-    credentials: "include",
-  }).catch(err => console.error("Failed to remove entry", err));
+  // fetch(`/api/resumes/123`, { // replace 123 with actual resumeId
+  //   method: "PUT",
+  //   headers: { "Content-Type": "application/json" },
+  //   body: JSON.stringify({ /* updated section array without this entry */ }),
+  //   credentials: "include",
+  // }).catch(err => console.error("Failed to remove entry", err));
 }
 
-
 function renderAuthForm() {
-  const authContent = document.getElementById('auth-content');
+  const authContent = document.getElementById("auth-content");
   if (!authContent) return;
   authContent.innerHTML = `
     <form id="auth-form" class="auth-form">

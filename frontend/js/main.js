@@ -17,11 +17,13 @@ document.addEventListener('DOMContentLoaded', () => {
     closeModal('auth-modal');
   });
   
-  document.getElementById('ai-summary-btn').addEventListener('click', () => {
-    // Delegate to API
-    // callAiEnhance(...)
-    console.log('Enhance summary with AI');
-  });
+  // THIS NEEDS TO BE DONE CASE BY CASE
+  // document.getElementById('ai-summary-btn').addEventListener('click', () => { 
+  //   // Delegate to API
+  //   // callAiEnhance(...)
+  //   console.log('Enhance summary with AI');
+  // });
+
   // Add listeners for dynamic add buttons
   document.getElementById('add-education-btn').addEventListener('click', () => {
     addDynamicEntry('education');

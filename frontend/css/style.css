@@ -9,7 +9,7 @@
   --info: #3abff8;
   --success: #36d399;
   --warning: #fbbd23;
-  --error: #f87272;
+  --error: #eb2222;
 }
 
 body {
@@ -84,6 +84,10 @@ select {
   flex: 1 1 200px;
 }
 
+textarea {
+  resize: none;
+}
+
 input:focus,
 textarea:focus,
 select:focus {
@@ -98,6 +102,18 @@ select:focus {
   font-size: 1rem;
   cursor: pointer;
   transition: background 0.2s;
+}
+
+.btn-rounded {
+  border-radius: 100px;
+  font-size: 1rem;
+  font-weight: bold;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  aspect-ratio: 1 / 1;
+  width: 0.9rem;
 }
 
 .btn-primary {
@@ -115,6 +131,11 @@ select:focus {
   color: #fff;
 }
 
+.btn-error {
+  background: var(--error);
+  color: #fff;
+}
+
 .btn-outline-secondary {
   background: #fff;
   color: var(--secondary);
@@ -122,8 +143,20 @@ select:focus {
   transition: background 0.2s, color 0.2s;
 }
 
-.btn-outline-secondary:hover, .btn-outline-secondary:focus {
+.btn-outline-error {
+  background: #fff;
+  color: var(--error);
+  border: 2px solid var(--error);
+  transition: background 0.2s, color 0.2s;
+}
+
+.btn-outline-secondary:hover {
   background: var(--secondary);
+  color: #fff;
+}
+
+.btn-outline-error:hover {
+  background: var(--error);
   color: #fff;
 }
 
@@ -196,11 +229,44 @@ select:focus {
 }
 .form-row {
   height: 2.5rem;
-
 }
 
 .auth-form .form-actions {
   margin-top: 1.5rem;
+}
+
+.dynamic-entry {
+  border: 1px solid var(--base-300);
+  border-radius: 4px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  background: var(--base-100);
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 0.4rem;
+}
+
+.dynamic-entry h3 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  grid-column: span 3;
+  margin-top: 0;
+  margin-bottom: 0.7rem;
+}
+
+.dynamic-entry .textarea-container {
+  grid-column: span 3;
+  grid-row: span 2;
+  display: flex;
+  gap: 0.5rem;
+}
+
+h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--secondary);
 }
 
 @media (max-width: 600px) {
