@@ -4,7 +4,6 @@ const authData = {
     username: undefined
 }
 
-
 function setAuthCookie(token) {
     const days = config.COOKIE_MAX_AGE_DAYS;
     const expires = new Date(Date.now() + days * 864e5).toUTCString();
@@ -16,4 +15,9 @@ function getAuthCookie() {
     return match ? decodeURIComponent(match[1]) : null;
 }
 
-export { setAuthCookie, getAuthCookie, authData };
+function getNewAuthData() {
+
+
+}
+
+export { setAuthCookie, getAuthCookie, authData, getNewAuthData };

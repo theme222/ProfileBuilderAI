@@ -16,7 +16,18 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('close-auth').addEventListener('click', function() {
     closeModal('auth-modal');
   });
-  
+
+  document.getElementById('login-radio').addEventListener('click', function() {
+      document.getElementById('form-username-row').classList.add('hidden');
+      document.getElementById('auth-form-submit').textContent = 'Login';
+    }
+  );
+  document.getElementById('signup-radio').addEventListener('click', function() {
+      document.getElementById('form-username-row').classList.remove('hidden');
+      document.getElementById('auth-form-submit').textContent = 'Register';
+    }
+  );
+
   // THIS NEEDS TO BE DONE CASE BY CASE
   // document.getElementById('ai-summary-btn').addEventListener('click', () => { 
   //   // Delegate to API

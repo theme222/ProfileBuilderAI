@@ -304,6 +304,10 @@ h3 {
   color: var(--secondary);
 }
 
+.hidden {
+  display: none !important;
+}
+
 @media (max-width: 600px) {
   /*IMPLEMENT PHONE MODE HERE*/
 
