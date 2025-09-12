@@ -1,18 +1,3 @@
-Of course. It's great that all the tests passed\! Now, let's create the final documentation for the new, refactored API.
-
-This new version reflects all the changes we made: no `bcrypt`, `jsonwebtoken`, or `cookie-parser`, and using a simple database token for sessions.
-
------
-
-## Instructions 📝
-
-1.  Copy all the text inside the box below.
-2.  Paste it into a new file in your code editor.
-3.  Save the file as `api-docs-v2.md`.
-
------
-
-````markdown
 # Backend API Documentation: Custom Session Auth
 
 ## Base URL
@@ -98,5 +83,3 @@ Retrieves the profile of the currently logged-in user. **This is a protected rou
     ```
 * **Error Responses**:
     * **401 Unauthorized**: If no valid token cookie is sent or if no user is found with that token.
-
-````
