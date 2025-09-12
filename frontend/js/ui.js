@@ -1,6 +1,6 @@
 import { UpperFirst } from "./misc.js";
 import { API_BACKEND_URL } from "./config.js";
-import { setAuthCookie, getAuthCookie } from './auth.js';
+import { getAuthCookie, authData, deleteAuthCookie } from './auth.js';
 // ui.js
 
 /**
@@ -202,15 +202,25 @@ export async function renderAuthContent() {
       if (res.ok) {
         const user = await res.json();
         updateNavbarAuth(user.username);
-        authContent.innerHTML = `<div class="auth-loggedin">
-          <div class="auth-loggedin-msg">Logged in as <span id='auth-username-span'>${user.username}</span></div>
+
+        authData.isAuthenticated = true;
+        authData.username = user.username;
+
+        authContent.innerHTML = 
+        `<div class="auth-loggedin">
+          <h2 class="auth-loggedin-msg">
+            Logged in as <span id='auth-username-span'>${user.username}</span>
+          </h2>
           <button id="logout-btn" class="btn btn-primary auth-logout-btn">Logout</button>
         </div>`;
         document.querySelector('.modal-content').style.maxWidth = '320px';
         document.querySelector('.modal-content').style.minWidth = '220px';
         document.getElementById('logout-btn').onclick = async function() {
           // Remove cookie and reload UI
-          document.cookie = 'authToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+          authData.isAuthenticated = false;
+          authData.username = null;
+          deleteAuthCookie();
+          await renderAuthContent();
         };
         return;
       }
@@ -277,7 +287,7 @@ export async function renderAuthContent() {
 
       const user = await res.json();
       console.log("User logged in", user);
-      updateNavbarAuth("loading..."); // will get set on re run
+      updateNavbarAuth("Loading..."); // will get set on re run
       await renderAuthContent();
 
     } catch (err) {

@@ -1,5 +1,5 @@
 // main.js
-import { getAuthCookie } from './auth.js';
+import { authData } from './auth.js';
 import { openModal, closeModal, addDynamicEntry, removeDynamicEntry, renderAuthContent, setupAuthToggle, updateNavbarAuth } from './ui.js';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -19,11 +19,14 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   document.getElementById('login-radio').addEventListener('click', function() {
+      if (authData.isAuthenticated) return;
       document.getElementById('form-username-row').classList.add('hidden');
       document.getElementById('auth-form-submit').textContent = 'Login';
     }
   );
+
   document.getElementById('signup-radio').addEventListener('click', function() {
+      if (authData.isAuthenticated) return;
       document.getElementById('form-username-row').classList.remove('hidden');
       document.getElementById('auth-form-submit').textContent = 'Register';
     }
