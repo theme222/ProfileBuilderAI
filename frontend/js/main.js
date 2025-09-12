@@ -1,5 +1,6 @@
 // main.js
-import { openModal, closeModal, addDynamicEntry, removeDynamicEntry } from './ui.js';
+import { getAuthCookie } from './auth.js';
+import { openModal, closeModal, addDynamicEntry, removeDynamicEntry, renderAuthContent, setupAuthToggle, updateNavbarAuth } from './ui.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   console.log('App initialized');
@@ -62,3 +63,9 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 // UI and API functions are imported globally for this skeleton
+
+// On page load, update navbar and modal
+window.addEventListener('DOMContentLoaded', async () => {
+  setupAuthToggle();
+  await renderAuthContent();
+});

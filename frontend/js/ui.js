@@ -1,5 +1,6 @@
 import { UpperFirst } from "./misc.js";
 import { API_BACKEND_URL } from "./config.js";
+import { setAuthCookie, getAuthCookie } from './auth.js';
 // ui.js
 
 /**
@@ -11,7 +12,7 @@ export function openModal(modalId) {
   if (modal) {
     modal.classList.remove("hidden");
     if (modalId === "auth-modal") {
-      
+      renderAuthContent();
     }
     if (modalId === "preview-modal") {
       // Load resume data from backend and render
@@ -178,4 +179,126 @@ export function removeDynamicEntry(element) {
   //   body: JSON.stringify({ /* updated section array without this entry */ }),
   //   credentials: "include",
   // }).catch(err => console.error("Failed to remove entry", err));
+}
+
+// Helper: Get selected auth mode
+export function getSelectedAuthMode() {
+  const loginRadio = document.getElementById('login-radio');
+  return loginRadio && loginRadio.checked ? 'login' : 'signup';
+}
+
+// Helper: Render auth modal content based on login state
+export async function renderAuthContent() {
+  const authContent = document.getElementById('auth-content');
+  if (!authContent) return;
+
+  const token = getAuthCookie();
+  if (token) {
+    // Check with backend if token is valid and get username
+    try {
+      const res = await fetch(`${API_BACKEND_URL}/api/auth/profile`, {
+        credentials: 'include',
+      });
+      if (res.ok) {
+        const user = await res.json();
+        updateNavbarAuth(user.username);
+        authContent.innerHTML = `<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:120px;">
+          <div style="margin-bottom:1.5rem;font-size:1.1rem;color:var(--primary);font-weight:600;">Logged in as <span id='auth-username-span'>${user.username}</span></div>
+          <button id="logout-btn" class="btn btn-primary" style="width: 100%;max-width:200px;">Logout</button>
+        </div>`;
+        document.querySelector('.modal-content').style.maxWidth = '320px';
+        document.querySelector('.modal-content').style.minWidth = '220px';
+        document.getElementById('logout-btn').onclick = async function() {
+          // Remove cookie and reload UI
+          document.cookie = 'authToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+        };
+        return;
+      }
+    } catch (e) {}
+  }
+
+  // Not logged in: show form
+  updateNavbarAuth();
+
+  authContent.innerHTML = `<form id="auth-form" class="auth-form">
+    <div class="form-row" id="form-username-row">
+      <input type="text" name="username" placeholder="Username" required autocomplete="username">
+    </div>
+    <div class="form-row" id="form-email-row">
+      <input type="email" name="email" placeholder="Email" required autocomplete="email">
+    </div>
+    <div class="form-row" id="form-password-row">
+      <input type="password" name="password" placeholder="Password" required autocomplete="current-password">
+    </div>
+    <div class="form-actions">
+      <button type="submit" class="btn btn-primary" style="width: 100%;" id="auth-form-submit">Continue</button>
+    </div>
+  </form>`;
+  document.querySelector('.modal-content').style.maxWidth = '420px';
+  document.querySelector('.modal-content').style.minWidth = '320px';
+
+  const usernameRow = document.getElementById('form-username-row')
+  if (getSelectedAuthMode() === 'login') {
+    usernameRow.style.display = 'none';
+    usernameRow.querySelector('input').required = false;
+  } else {
+    usernameRow.style.display = 'flex';
+    usernameRow.querySelector('input').required = true;
+  }
+
+  // Attach submit handler
+  const authForm = document.getElementById('auth-form');
+  if (!authForm) return;
+
+  authForm.onsubmit = async function(e) {
+    e.preventDefault();
+    const mode = getSelectedAuthMode();
+    const data = {
+      username: authForm.username.value,
+      email: authForm.email.value,
+      password: authForm.password.value
+    };
+    let url = `${API_BACKEND_URL}/api/auth/` + (mode === 'signup' ? 'register' : 'login');
+
+    if (mode === 'login') delete data.username;
+
+    try {
+      const res = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify(data)
+      });
+
+      if (!res.ok) {
+        alert('Authentication failed');
+        console.error(res);
+      }
+
+      const user = await res.json();
+      console.log("User logged in", user);
+      updateNavbarAuth("loading..."); // will get set on re run
+      await renderAuthContent();
+
+    } catch (err) {
+      alert('Network error.');
+    }
+
+  };
+}
+
+// Update navbar button
+export function updateNavbarAuth(username) {
+  const authBtn = document.getElementById('auth-btn');
+  if (authBtn) {
+    authBtn.textContent = username || 'Login / Signup';
+  }
+}
+
+// Listen for radio toggle to re-render form
+export function setupAuthToggle() {
+  const radios = document.querySelectorAll('input[name="auth-mode"]');
+  radios.forEach(radio => {
+    radio.addEventListener('change', renderAuthContent);
+  });
 }
