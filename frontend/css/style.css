@@ -307,6 +307,25 @@ h3 {
 .hidden {
   display: none !important;
 }
+ls
+
+.auth-loggedin {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 120px;
+}
+.auth-loggedin-msg {
+  margin-bottom: 1.5rem;
+  font-size: 1.1rem;
+  color: var(--primary);
+  font-weight: 600;
+}
+.auth-logout-btn {
+  width: 100%;
+  max-width: 200px;
+}
 
 @media (max-width: 600px) {
   /*IMPLEMENT PHONE MODE HERE*/

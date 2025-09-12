@@ -202,9 +202,9 @@ export async function renderAuthContent() {
       if (res.ok) {
         const user = await res.json();
         updateNavbarAuth(user.username);
-        authContent.innerHTML = `<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:120px;">
-          <div style="margin-bottom:1.5rem;font-size:1.1rem;color:var(--primary);font-weight:600;">Logged in as <span id='auth-username-span'>${user.username}</span></div>
-          <button id="logout-btn" class="btn btn-primary" style="width: 100%;max-width:200px;">Logout</button>
+        authContent.innerHTML = `<div class="auth-loggedin">
+          <div class="auth-loggedin-msg">Logged in as <span id='auth-username-span'>${user.username}</span></div>
+          <button id="logout-btn" class="btn btn-primary auth-logout-btn">Logout</button>
         </div>`;
         document.querySelector('.modal-content').style.maxWidth = '320px';
         document.querySelector('.modal-content').style.minWidth = '220px';
