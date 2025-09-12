@@ -79,7 +79,10 @@ export function addDynamicEntry(sectionType) {
   // TODO: Add entry fields to DOM
   // ✅ Still adds to DOM, but also persists to backend with PUT /api/resumes/:id
   const container = document.getElementById(`${sectionType}-entries`);
-  if (!container) return;
+  if (!container) {
+    console.error(`Container for ${sectionType} not found`);
+    return;
+  }
 
   let placeholder;
   switch (sectionType) {
