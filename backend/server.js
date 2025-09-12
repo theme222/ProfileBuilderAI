@@ -5,7 +5,6 @@ const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
 const connectDB = require('./config/db');
-const cookieParser = require('cookie-parser');
 
 const authRoutes = require('./routes/authRoutes');
 const resumeRoutes = require('./routes/resumeRoutes');
@@ -16,7 +15,6 @@ const app = express();
 
 // Middleware
 app.use(express.json());
-app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '../frontend')));
 
 // Connect to DB
