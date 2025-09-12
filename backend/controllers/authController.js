@@ -27,9 +27,10 @@ exports.registerUser = async (req, res) => {
     await user.save();
 
     res.cookie('token', token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
+      httpOnly: false,
+      secure: false, // In production, this should be true
+      sameSite: 'Lax',
+      maxAge: 30 * 24 * 60 * 60 * 1000 // 30 days
     });
 
     res.status(201).json({
@@ -64,9 +65,10 @@ exports.loginUser = async (req, res) => {
     await user.save();
 
     res.cookie('token', token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
+      httpOnly: false,
+      secure: false, // In production, this should be true
+      sameSite: 'Lax',
+      maxAge: 30 * 24 * 60 * 60 * 1000 // 30 days
     });
 
     res.status(200).json({
