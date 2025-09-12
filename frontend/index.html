@@ -88,10 +88,28 @@
   <!-- Auth Modal -->
   <div id="auth-modal" class="modal hidden">
     <div class="modal-content">
-      <h2 >Login / Signup</h2>
+      <div class="auth-toggle">
+        <input type="radio" id="login-radio" name="auth-mode" value="login" checked>
+        <label for="login-radio" class="btn btn-outline-primary auth-toggle-btn">Login</label>
+        <input type="radio" id="signup-radio" name="auth-mode" value="signup">
+        <label for="signup-radio" class="btn btn-outline-primary auth-toggle-btn">Signup</label>
+      </div>
       <span class="close" id="close-auth">&times;</span>
       <div id="auth-content">
-        <!-- Login/Signup form will be rendered here -->
+        <form id="auth-form" class="auth-form">
+          <div class="form-row" id="form-username-row">
+            <input type="text" name="username" placeholder="Username" required autocomplete="username">
+          </div>
+          <div class="form-row" id="form-email-row">
+            <input type="email" name="email" placeholder="Email" required autocomplete="email">
+          </div>
+          <div class="form-row" id="form-password-row">
+            <input type="password" name="password" placeholder="Password" required autocomplete="current-password">
+          </div>
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary" style="width: 100%;" id="auth-form-submit">Continue</button>
+          </div>
+        </form>
       </div>
     </div>
   </div>

@@ -164,6 +164,17 @@ select:focus {
   opacity: 0.9;
 }
 
+.btn-outline-primary {
+  background: #fff;
+  color: var(--primary);
+  border: 2px solid var(--primary);
+  transition: background 0.2s, color 0.2s;
+}
+.btn-outline-primary:hover, .btn-outline-primary:focus, .btn-outline-primary.active {
+  background: var(--primary);
+  color: #fff;
+}
+
 .form-actions {
   text-align: right;
 }
@@ -235,6 +246,30 @@ select:focus {
   margin-top: 1.5rem;
 }
 
+.auth-toggle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+.auth-toggle input[type="radio"] {
+  display: none;
+}
+.auth-toggle-btn {
+  cursor: pointer;
+  border-radius: 100px;
+  padding: 0.5rem 2.2rem;
+  font-weight: 600;
+  font-size: 1.1rem;
+  transition: background 0.2s, color 0.2s;
+}
+.auth-toggle input[type="radio"]:checked + .auth-toggle-btn {
+  background: var(--primary);
+  color: #fff;
+  border-color: var(--primary);
+}
+
 .dynamic-entry {
   border: 1px solid var(--base-300);
   border-radius: 4px;
@@ -267,6 +302,10 @@ h3 {
   font-size: 1.2rem;
   font-weight: 600;
   color: var(--secondary);
+}
+
+.hidden {
+  display: none !important;
 }
 
 @media (max-width: 600px) {

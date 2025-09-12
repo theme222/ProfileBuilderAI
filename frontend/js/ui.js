@@ -11,7 +11,7 @@ export function openModal(modalId) {
   if (modal) {
     modal.classList.remove("hidden");
     if (modalId === "auth-modal") {
-      renderAuthForm();
+      
     }
     if (modalId === "preview-modal") {
       // Load resume data from backend and render
@@ -178,25 +178,4 @@ export function removeDynamicEntry(element) {
   //   body: JSON.stringify({ /* updated section array without this entry */ }),
   //   credentials: "include",
   // }).catch(err => console.error("Failed to remove entry", err));
-}
-
-function renderAuthForm() {
-  const authContent = document.getElementById("auth-content");
-  if (!authContent) return;
-  authContent.innerHTML = `
-    <form id="auth-form" class="auth-form">
-      <div class="form-row">
-        <input type="text" name="username" placeholder="Username" required autocomplete="username">
-      </div>
-      <div class="form-row">
-        <input type="email" name="email" placeholder="Email" required autocomplete="email">
-      </div>
-      <div class="form-row">
-        <input type="password" name="password" placeholder="Password" required autocomplete="current-password">
-      </div>
-      <div class="form-actions">
-        <button type="submit" class="btn btn-primary" style="width: 100%;">Continue</button>
-      </div>
-    </form>
-  `;
 }
