@@ -1,4 +1,4 @@
-const exampleResumeContent = {
+export const exampleResumeContent = {
     name: "Jane Smith",
     email: "jane.smith@example.com",
     phone: "555-123-4567",
@@ -50,18 +50,70 @@ const exampleResumeContent = {
 
 
 
-export function loadResumePreview()
-{
+export function loadResumePreview(resumeData) {
+    resumeData = exampleResumeContent; // For testing with example data
+    // 1. Clear previous content to prevent duplication
+    document.getElementById('preview-name').innerHTML = '';
+    document.getElementById('preview-job-title').innerHTML = '';
+    document.getElementById('preview-contact').innerHTML = '<h3 class="resume-section-title">CONTACT</h3>';
+    document.getElementById('preview-education').innerHTML = '<h3 class="resume-section-title">EDUCATION</h3>';
+    document.getElementById('preview-skills').innerHTML = '<h3 class="resume-section-title">SKILLS</h3>';
+    document.getElementById('preview-work').innerHTML = '<h3 class="resume-section-title">WORK EXPERIENCE</h3>';
+
+    // 2. Populate Header
+    document.getElementById('preview-name').textContent = resumeData.name ? resumeData.name.toUpperCase() : '';
+    document.getElementById('preview-job-title').textContent = resumeData.jobTitle ? resumeData.jobTitle.toUpperCase() : '';
+
+    // 3. Populate Sidebar Sections
+    const contactContainer = document.getElementById('preview-contact');
+    contactContainer.innerHTML += `
+        <p>${resumeData.email || ''}</p>
+        <p>${resumeData.phone || ''}</p>
+        <p>${resumeData.address || ''}</p>
+        <p>${resumeData.linkedin ? `<a href="${resumeData.linkedin}" target="_blank">LinkedIn</a>` : ''}</p>
+        <p>${resumeData.github ? `<a href="${resumeData.github}" target="_blank">GitHub</a>` : ''}</p>
+    `;
+
+    const educationContainer = document.getElementById('preview-education');
+    (resumeData.education || []).forEach(edu => {
+        const eduEntry = document.createElement('div');
+        eduEntry.className = 'sidebar-entry';
+        eduEntry.innerHTML = `
+            <h4>${edu.degree || edu.title || ''}</h4>
+            <p>${edu.school || edu.area || ''}</p>
+            <p>${(edu.start && edu.end) ? `${edu.start} - ${edu.end}` : (edu.date || '')}</p>
+            <p>${edu.description || ''}</p>
+        `;
+        educationContainer.appendChild(eduEntry);
+    });
     
+    const skillsContainer = document.getElementById('preview-skills');
+    const skillsList = document.createElement('ul');
+    skillsList.className = 'skills-list';
+    (resumeData.skills || []).forEach(skill => {
+        const skillItem = document.createElement('li');
+        skillItem.textContent = skill.name || skill;
+        skillsList.appendChild(skillItem);
+    });
+    skillsContainer.appendChild(skillsList);
 
+    // 4. Populate Main Content Section (Work Experience)
+    const workContainer = document.getElementById('preview-work');
+    (resumeData.work || []).forEach(job => {
+        const jobEntry = document.createElement('div');
+        jobEntry.className = 'main-entry';
+        // Simple string replacement for bullet points for this example
+        const descriptionBullets = (job.description || '')
+            .split('.')
+            .filter(sentence => sentence.trim() !== '')
+            .map(sentence => `<li>${sentence.trim()}.</li>`)
+            .join('');
 
-
+        jobEntry.innerHTML = `
+            <h4>${job.role || job.title || ''}</h4>
+            <h5>${(job.company || job.area || '')}${(job.start || job.date) ? ' / ' + (job.start || job.date) : ''}${job.end ? ' - ' + job.end : ''}</h5>
+            <ul>${descriptionBullets}</ul>
+        `;
+        workContainer.appendChild(jobEntry);
+    });
 }
-
-
-
-
-
-
-
-

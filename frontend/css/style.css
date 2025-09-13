@@ -1,3 +1,143 @@
+/* --- Resume Preview Styles --- */
+
+/* Controls at the top of the modal */
+.preview-controls {
+  padding: 0.5rem 1rem;
+  background: var(--base-300);
+  border-bottom: 1px solid var(--base-200);
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 4px;
+}
+.preview-controls label {
+  font-weight: 600;
+  color: var(--neutral);
+}
+
+/* Main container for the A4-ratio preview */
+#resume-output.resume-preview-container {
+  display: flex;
+  width: 100%;
+  height: 100%; /* Adjust height based on controls */
+  background: white;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  color: #333;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+/* --- Classic Professional Theme --- */
+.classic-professional .resume-sidebar {
+  background-color: #2c615f; /* Dark Teal */
+  color: white;
+  width: 35%;
+  padding: 2rem;
+  font-size: 0.9rem;
+}
+
+.classic-professional .resume-sidebar a {
+  color: #a7d8d5; /* Light teal for links */
+  text-decoration: none;
+}
+.classic-professional .resume-sidebar a:hover {
+  text-decoration: underline;
+}
+
+.classic-professional .resume-sidebar .resume-section {
+  margin-bottom: 2rem;
+}
+.classic-professional .resume-sidebar .resume-section-title {
+  font-size: 1.1rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: white;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #5f9ea0; /* Lighter teal border */
+  margin-bottom: 1rem;
+}
+
+.classic-professional .sidebar-entry h4 {
+  font-size: 1rem;
+  margin: 0.5rem 0 0.2rem 0;
+}
+.classic-professional .sidebar-entry p {
+  margin: 0.2rem 0;
+  opacity: 0.9;
+}
+.classic-professional .skills-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.classic-professional .skills-list li {
+  margin-bottom: 0.3rem;
+}
+
+
+.classic-professional .resume-main {
+  width: 65%;
+  padding: 2.5rem;
+  background: white;
+}
+
+.classic-professional .resume-header {
+  text-align: left;
+  margin-bottom: 2rem;
+  border-bottom: 2px solid #333;
+  padding-bottom: 0.5rem;
+}
+.classic-professional .resume-header h1 {
+  font-family: 'Georgia', serif;
+  font-size: 2.8rem;
+  margin: 0;
+  letter-spacing: 2px;
+  color: #222;
+}
+.classic-professional .resume-header h2 {
+  font-size: 1.2rem;
+  margin: 0.5rem 0 0 0;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #444;
+}
+
+.classic-professional .resume-main .resume-section-title {
+  font-size: 1.3rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #333;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 1.5rem;
+}
+
+.classic-professional .main-entry {
+  margin-bottom: 1.5rem;
+}
+.classic-professional .main-entry h4 {
+  font-size: 1.2rem;
+  margin: 0;
+}
+.classic-professional .main-entry h5 {
+  font-size: 1rem;
+  font-style: italic;
+  font-weight: normal;
+  color: #555;
+  margin: 0.2rem 0 0.5rem 0;
+}
+.classic-professional .main-entry ul {
+  list-style-type: disc;
+  padding-left: 1.5rem;
+  margin: 0;
+}
+.classic-professional .main-entry li {
+  margin-bottom: 0.5rem;
+  line-height: 1.4;
+}
+
 :root {
   --base-100: #ffffff;
   --base-200: #f2f2f2;
@@ -206,6 +346,7 @@ select:focus {
   position: relative;
   height: auto;
   margin: 1rem 1rem;
+  overflow-y: scroll;
 }
 
 .modal-content h2 {
@@ -327,8 +468,8 @@ h3 {
 }
 
 #preview-content {
-  background: var(--base-200);
-  height: 90vh;
+  height: 11.7in;
+  width: 8.3in;
   aspect-ratio: 1 / 1.414; /* A4 aspect ratio */
 }
 

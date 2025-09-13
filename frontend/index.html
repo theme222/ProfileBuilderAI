@@ -82,15 +82,54 @@
     </form>
   </main>
   <!-- Preview Modal -->
-  <div id="preview-modal" class="modal hidden">
+  <div id="preview-modal" class="modal">
     <div class="modal-content">
       <span class="close" id="close-preview">&times;</span>
+
+        <div class="preview-controls">
+          <label for="style-selector">Style:</label>
+          <select id="style-selector" name="style-selector">
+            <option value="classic-professional" selected>Classic Professional</option>
+            <!-- Add other style options here in the future -->
+          </select>
+        </div>
+
       <div id="preview-content">
+        <!-- 1. Style Selector Controls -->
 
+        <!-- 2. Resume Preview Container for "Classic Professional" Theme -->
+        <div id="resume-output" class="resume-preview-container classic-professional">
+          <!-- LEFT SIDEBAR -->
+          <aside class="resume-sidebar">
+            <div class="resume-section" id="preview-contact">
+              <h3 class="resume-section-title">CONTACT</h3>
+              <!-- Contact items will be populated here by JS -->
+            </div>
+            <div class="resume-section" id="preview-education">
+              <h3 class="resume-section-title">EDUCATION</h3>
+              <!-- Education items will be populated here by JS -->
+            </div>
+            <div class="resume-section" id="preview-skills">
+              <h3 class="resume-section-title">SKILLS</h3>
+              <!-- Skills will be populated here by JS -->
+            </div>
+          </aside>
 
-
-
+          <!-- MAIN CONTENT -->
+          <main class="resume-main">
+            <header class="resume-header">
+              <h1 id="preview-name"></h1>
+              <h2 id="preview-job-title"></h2>
+            </header>
+            <div class="resume-section" id="preview-work">
+              <h3 class="resume-section-title">WORK EXPERIENCE</h3>
+              <!-- Work experience items will be populated here by JS -->
+            </div>
+            <!-- Add other main sections like Projects if needed -->
+          </main>
+        </div>
       </div>
+
     </div>
   </div>
   <!-- Auth Modal -->

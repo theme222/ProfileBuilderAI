@@ -1,5 +1,6 @@
 // main.js
 import { authData } from './auth.js';
+import { loadResumePreview } from './resume.js';
 import { openModal, closeModal, addDynamicEntry, removeDynamicEntry, renderAuthContent, setupAuthToggle, updateNavbarAuth } from './ui.js';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -71,4 +72,5 @@ document.addEventListener('DOMContentLoaded', () => {
 window.addEventListener('DOMContentLoaded', async () => {
   setupAuthToggle();
   await renderAuthContent();
+  loadResumePreview();
 });
