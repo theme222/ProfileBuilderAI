@@ -200,13 +200,12 @@ select:focus {
   background: var(--base-100);
   padding: 2rem;
   border-radius: 8px;
-  width: 100%;
-  max-width: 420px;
-  min-width: 320px;
+  max-width: 90vw;
+  max-height: 90vh;
   box-shadow: 0 2px 16px rgba(0, 0, 0, 0.12);
   position: relative;
   height: auto;
-  margin: 0 1rem;
+  margin: 1rem 1rem;
 }
 
 .modal-content h2 {
@@ -238,6 +237,7 @@ select:focus {
   align-items: center;
   gap: 0.5rem;
 }
+
 .form-row {
   height: 2.5rem;
 }
@@ -326,6 +326,12 @@ h3 {
   max-width: 200px;
 }
 
+#preview-content {
+  background: var(--base-200);
+  height: 90vh;
+  aspect-ratio: 1 / 1.414; /* A4 aspect ratio */
+}
+
 @media (max-width: 600px) {
   /*IMPLEMENT PHONE MODE HERE*/
 
@@ -344,12 +350,12 @@ h3 {
     flex-direction: column;
     gap: 0.5rem;
   } */
-  .modal-content {
+  /* .modal-content {
     padding: 1rem;
     min-width: 0;
     max-width: 98vw;
     width: 98vw;
-  }
+  } */
 }
 
 /* Additional styles for dynamic entries, buttons, etc. can be added here */

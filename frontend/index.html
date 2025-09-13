@@ -33,8 +33,11 @@
           <input type="text" name="Address" placeholder="Address">
         </div>
       </section>
-      <section class="section" id="job-description" style="height: 11rem">
+      <section class="section" id="job-description" style="height: 15rem">
         <h2>Job Description</h2>
+        <div class="form-row">
+          <input type="text" name="job-title" placeholder="Job Title" required>
+        </div>
         <div class="form-row">
           <textarea name="summary" rows="6" placeholder="Paste job description here"></textarea>
         </div>
@@ -42,7 +45,7 @@
       <section class="section" id="summary-section" style="height: 11rem">
         <h2>Summary</h2>
         <div class="form-row">
-          <textarea name="summary" rows="6" placeholder="Write a short summary..."></textarea>
+          <textarea name="summary" rows="6" placeholder="Write a short summary about yourself and what you do."></textarea>
           <button type="button" class="btn btn-outline-secondary btn-ai">
             <img src="assets/sparkles.svg" alt="AI Enhance" style="width:1.2em;height:1.2em;vertical-align:middle;margin-right:0.4em;">AI Enhance
           </button>
@@ -82,12 +85,17 @@
   <div id="preview-modal" class="modal hidden">
     <div class="modal-content">
       <span class="close" id="close-preview">&times;</span>
-      <div id="preview-content"></div>
+      <div id="preview-content">
+
+
+
+
+      </div>
     </div>
   </div>
   <!-- Auth Modal -->
   <div id="auth-modal" class="modal hidden">
-    <div class="modal-content">
+    <div class="modal-content" style="width: 35rem;">
       <div class="auth-toggle">
         <input type="radio" id="login-radio" name="auth-mode" value="login" checked>
         <label for="login-radio" class="btn btn-outline-primary auth-toggle-btn">Login</label>

@@ -1,6 +1,17 @@
 // api.js
-import { setAuthCookie, authData } from './auth.js';
+import { authData } from './auth.js';
 import { API_BACKEND_URL } from './config.js';
+
+
+export async function getUserProfile()
+{
+  try {
+    const res = await fetch(`${API_BACKEND_URL}/api/auth/profile`, {
+      credentials: 'include',
+    });
+    return res.ok ? await res.json() : null;
+  } catch (e) { console.error("could not get user profile", e); }
+}
 
 /**
  * Logs in a user.
@@ -8,17 +19,22 @@ import { API_BACKEND_URL } from './config.js';
  * @param {string} password
  * @returns {Promise<Object>}
  */
-async function login(username, password) {
-  console.log('login called', username);
+export async function login(email, password) {
+  console.log('login called', email);
   try {
     const res = await fetch(`${API_BACKEND_URL}/api/auth/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username, password })
+      credentials: 'include',
+      body: JSON.stringify({ email, password })
     });
 
     if (!res.ok) throw new Error('Login failed');
-    return await res.json();
+
+    const data = await res.json();
+    // console.log("Login successful", data);
+    return data;
+
   } catch (err) {
     console.error('Login error:', err);
     return Promise.resolve({});
@@ -32,25 +48,22 @@ async function login(username, password) {
  * @param {string} password
  * @returns {Promise<Object>}
  */
-async function register(username, email, password) {
+export async function register(username, email, password) {
   console.log('register called', username, email);
   try {
     const res = await fetch(`${API_BACKEND_URL}/api/auth/register`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username, password })
+      credentials: 'include',
+      body: JSON.stringify({ username, email, password })
     });
 
     if (!res.ok) throw new Error('Registration failed');
-
     const data = await res.json(); // Expecting { success: true, cookie: '...' }
 
-    // TODO: Notify user here about success or failure
-    if (!data.success) throw new Error('Registration failed');
-
-    setAuthCookie(data.cookie);
-    authData.username = username;
-    console.log("Registration successful", data);
+    authData.username = data.username;
+    // console.log("Registration successful", data);
+    return data;
 
   } catch (err) {
     console.error('Register error:', err);
@@ -69,6 +82,7 @@ async function saveResume(resumeData) {
     const res = await fetch(`${API_BACKEND_URL}/api/resumes`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
       body: JSON.stringify(resumeData)
     });
 

@@ -1,6 +1,7 @@
 import { UpperFirst } from "./misc.js";
 import { API_BACKEND_URL } from "./config.js";
 import { getAuthCookie, authData, deleteAuthCookie } from './auth.js';
+import { getUserProfile, register, login } from "./api.js";
 // ui.js
 
 /**
@@ -89,9 +90,9 @@ export function addDynamicEntry(sectionType) {
   switch (sectionType) {
     case "education":
       placeholder = {
-        role: "Degree (e.g. B.Tech in CSE)",
-        place: "School/University",
-        date: "Year(s) (e.g. 2021-2025)",
+        title: "Degree (e.g. B.Tech in CSE)",
+        area: "School/University",
+        number: "Year(s) (e.g. 2021-2025)",
         description: "Brief description, honors, or activities",
       };
       break;
@@ -100,7 +101,7 @@ export function addDynamicEntry(sectionType) {
       placeholder = {
         role: "Job Title (e.g. Software Intern)",
         place: "Company Name",
-        date: "Dates (e.g. Jun 2023 - Aug 2023)",
+        number: "Dates (e.g. Jun 2023 - Aug 2023)",
         description: "Describe your responsibilities and achievements",
       };
       break;
@@ -108,7 +109,7 @@ export function addDynamicEntry(sectionType) {
       placeholder = {
         role: "Project Title",
         place: "Tech Stack (e.g. React, Node.js)",
-        date: "Year or Duration",
+        number: "Year or Duration",
         description: "Project description and your role",
       };
       break;
@@ -116,15 +117,15 @@ export function addDynamicEntry(sectionType) {
       placeholder = {
         role: "Skill Name (e.g. Python)",
         place: "Category (e.g. Programming Language)",
-        date: "",
-        description: "Proficiency or details (optional)",
+        number: "Proficiency (1 - 10)",
+        description: "Other Details (optional)",
       };
       break;
     case "certification":
       placeholder = {
         role: "Certification Name",
         place: "Issuing Organization",
-        date: "Date Earned",
+        number: "Date Earned",
         description: "Credential ID or details (optional)",
       };
       break;
@@ -132,7 +133,7 @@ export function addDynamicEntry(sectionType) {
       placeholder = {
         role: "Title/Role",
         place: "Company/School",
-        date: "Date Range",
+        number: "Date Range",
         description: "Description",
       };
   }
@@ -144,9 +145,9 @@ export function addDynamicEntry(sectionType) {
         ${UpperFirst(sectionType)} Entry ${container.childElementCount + 1}
         <div class="close remove-btn" style="font-size: 0.9rem;">X</div>
       </h3>
-      <input type="text" name="${sectionType}-role" placeholder="${ placeholder.role }" value="" required>
-      <input type="text" name="${sectionType}-place" placeholder="${ placeholder.place }" value="" required>
-      <input type="text" name="${sectionType}-date" placeholder="${ placeholder.date }" value="">
+      <input type="text" name="${sectionType}-title" placeholder="${ placeholder.role }" value="" required>
+      <input type="text" name="${sectionType}-area" placeholder="${ placeholder.place }" value="" required>
+      <input type="text" name="${sectionType}-number" placeholder="${ placeholder.number }" value="">
       <div class="textarea-container">
       <textarea name="${sectionType}-description" placeholder="${ placeholder.description }"></textarea>
       <button type="button" class="btn btn-outline-secondary btn-ai">
@@ -195,36 +196,31 @@ export async function renderAuthContent() {
   const token = getAuthCookie();
   if (token) {
     // Check with backend if token is valid and get username
-    try {
-      const res = await fetch(`${API_BACKEND_URL}/api/auth/profile`, {
-        credentials: 'include',
-      });
-      if (res.ok) {
-        const user = await res.json();
-        updateNavbarAuth(user.username);
+    const user = await getUserProfile();
+    if (user) {
+      updateNavbarAuth(user.username);
 
-        authData.isAuthenticated = true;
-        authData.username = user.username;
+      authData.isAuthenticated = true;
+      authData.username = user.username;
 
-        authContent.innerHTML = 
-        `<div class="auth-loggedin">
-          <h2 class="auth-loggedin-msg">
-            Logged in as <span id='auth-username-span'>${user.username}</span>
-          </h2>
-          <button id="logout-btn" class="btn btn-primary auth-logout-btn">Logout</button>
-        </div>`;
-        document.querySelector('.modal-content').style.maxWidth = '320px';
-        document.querySelector('.modal-content').style.minWidth = '220px';
-        document.getElementById('logout-btn').onclick = async function() {
-          // Remove cookie and reload UI
-          authData.isAuthenticated = false;
-          authData.username = null;
-          deleteAuthCookie();
-          await renderAuthContent();
-        };
-        return;
-      }
-    } catch (e) {}
+      authContent.innerHTML = 
+      `<div class="auth-loggedin">
+        <h2 class="auth-loggedin-msg">
+          Logged in as <span id='auth-username-span'>${user.username}</span>
+        </h2>
+        <button id="logout-btn" class="btn btn-primary auth-logout-btn">Logout</button>
+      </div>`;
+      document.querySelector('.modal-content').style.maxWidth = '320px';
+      document.querySelector('.modal-content').style.minWidth = '220px';
+      document.getElementById('logout-btn').onclick = async function() {
+        // Remove cookie and reload UI
+        authData.isAuthenticated = false;
+        authData.username = null;
+        deleteAuthCookie();
+        await renderAuthContent();
+      };
+      return;
+    }
   }
 
   // Not logged in: show form
@@ -244,8 +240,6 @@ export async function renderAuthContent() {
       <button type="submit" class="btn btn-primary" style="width: 100%;" id="auth-form-submit">Continue</button>
     </div>
   </form>`;
-  document.querySelector('.modal-content').style.maxWidth = '420px';
-  document.querySelector('.modal-content').style.minWidth = '320px';
 
   const usernameRow = document.getElementById('form-username-row')
   if (getSelectedAuthMode() === 'login') {
@@ -263,36 +257,21 @@ export async function renderAuthContent() {
   authForm.onsubmit = async function(e) {
     e.preventDefault();
     const mode = getSelectedAuthMode();
-    const data = {
-      username: authForm.username.value,
-      email: authForm.email.value,
-      password: authForm.password.value
-    };
+
     let url = `${API_BACKEND_URL}/api/auth/` + (mode === 'signup' ? 'register' : 'login');
 
-    if (mode === 'login') delete data.username;
-
-    try {
-      const res = await fetch(url, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'include',
-        body: JSON.stringify(data)
-      });
-
-      if (!res.ok) {
-        alert('Authentication failed');
-        console.error(res);
-      }
-
-      const user = await res.json();
-      console.log("User logged in", user);
-      updateNavbarAuth("Loading..."); // will get set on re run
-      await renderAuthContent();
-
-    } catch (err) {
-      alert('Network error.');
+    let user;
+    if (mode === 'login') {
+      delete data.username;
+      user = await login(authForm.email.value, authForm.password.value);
     }
+    else if (mode === 'signup') {
+      user = await register(authForm.username.value, authForm.email.value, authForm.password.value);
+    }
+
+    console.log("User logged in", user);
+    updateNavbarAuth("Loading..."); // will get set on re run
+    await renderAuthContent();
 
   };
 }
