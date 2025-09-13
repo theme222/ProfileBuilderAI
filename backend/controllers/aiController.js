@@ -1,15 +1,14 @@
-
+// controllers/aiController.js
 require('dotenv').config();
-
 
 const { GoogleGenerativeAI } = require('@google/generative-ai');
 
-
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-
 const model = genAI.getGenerativeModel({ model: 'gemini-pro' });
 
-
+/**
+ * Enhance resume summary
+ */
 const enhanceSummary = async (req, res) => {
   const { summary } = req.body;
 
@@ -36,12 +35,16 @@ const enhanceSummary = async (req, res) => {
   }
 };
 
-
+/**
+ * Generate professional bullet points
+ */
 const generateBullets = async (req, res) => {
   const { jobTitle, company, experienceDescription } = req.body;
 
   if (!jobTitle || !company || !experienceDescription) {
-    return res.status(400).json({ message: 'Job title, company, and experience description are required.' });
+    return res.status(400).json({
+      message: 'Job title, company, and experience description are required.',
+    });
   }
 
   try {
@@ -56,8 +59,14 @@ const generateBullets = async (req, res) => {
 
     const result = await model.generateContent(prompt);
     const response = await result.response;
-    
-    const bullets = response.text().trim().split('\n').map(point => point.replace(/^- /, '').trim());
+
+    // Clean up into a list of bullets
+    const bullets = response
+      .text()
+      .trim()
+      .split('\n')
+      .map(point => point.replace(/^- /, '').trim())
+      .filter(point => point.length > 0);
 
     res.status(200).json({ bullets });
   } catch (error) {
@@ -68,5 +77,5 @@ const generateBullets = async (req, res) => {
 
 module.exports = {
   enhanceSummary,
-  generateBullets,
+  generateBullets, // ✅ matches resumeRoutes.js
 };

@@ -1,53 +1,84 @@
 // controllers/resumeController.js
+const Resume = require('../models/resumeModel.js');
 
-/**
- * Creates a new resume.
- * @param {Request} req
- * @param {Response} res
- */
 exports.createResume = async (req, res) => {
-  console.log('createResume called');
-  // TODO: Implement create resume logic
+  try {
+    const newResumeData = {
+      user: req.user._id,
+      ...req.body
+    };
+
+    const resume = await Resume.create(newResumeData);
+    res.status(201).json(resume);
+
+  } catch (error) {
+    res.status(400).json({ message: 'Error creating resume', error: error.message });
+  }
+
 };
 
-/**
- * Gets a resume by ID.
- * @param {Request} req
- * @param {Response} res
- */
-exports.getResume = async (req, res) => {
-  console.log('getResume called');
-  // TODO: Implement get resume logic
+exports.getAllUserResumes = async (req, res) => {
+  try {
+    // Find all resumes where the user field matches the logged-in user's ID
+    const resumes = await Resume.find({ user: req.user._id });
+    res.json(resumes);
+  } catch (error) {
+    res.status(500).json({ message: 'Server Error' });
+  }
+};
 
-  /*
-  // Example implementation:
-  const Resume = require('../models/resumeModel');
+exports.getResume = async (req, res) => {
   try {
     const resume = await Resume.findById(req.params.id);
-    if (!resume) return res.status(404).json({ message: 'Resume not found' });
+    if (!resume) {
+      return res.status(404).json({ message: 'Resume not found' });
+    }
     res.json(resume);
-  } catch (err) {
-    res.status(500).json({ message: 'Server error' });
+
+  } catch (error) {
+    res.status(500).json({ message: 'Server Error' });
   }
-  */
 };
 
-/**
- * Updates a resume by ID.
- * @param {Request} req
- * @param {Response} res
- */
 exports.updateResume = async (req, res) => {
-  console.log('updateResume called');
-  // TODO: Implement update resume logic
+  try {
+    const resume = await Resume.findById(req.params.id);
+
+    if (!resume) {
+      return res.status(404).json({ message: 'Resume not found' });
+    }
+
+    if (resume.user.toString() !== req.user._id.toString()) {
+      return res.status(401).json({ message: 'Not authorized' });
+    }
+
+    const updatedResume = await Resume.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    });
+
+    res.status(200).json(updatedResume);
+
+  } catch (error) {
+    res.status(500).json({ message: 'Server Error' });
+  }
 };
 
-/**
- * Deletes a resume by ID.
- * @param {Request} req
- * @param {Response} res
- */
 exports.deleteResume = async (req, res) => {
-  console.log('deleteResume called');
-  // TODO: Implement delete resume logic
+  try {
+    const resume = await Resume.findById(req.params.id);
+
+    if (!resume) {
+      return res.status(404).json({ message: 'Resume not found' });
+    }
+
+    if (resume.user.toString() !== req.user._id.toString()) {
+      return res.status(401).json({ message: 'Not authorized' });
+    }
+
+    await Resume.findByIdAndDelete(req.params.id);
+    res.status(200).json({ message: 'Resume deleted successfully' });
+
+  } catch (error) {
+    res.status(500).json({ message: 'Server Error' });
+  }
 };
