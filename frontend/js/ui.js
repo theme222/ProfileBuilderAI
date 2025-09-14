@@ -258,11 +258,8 @@ export async function renderAuthContent() {
     e.preventDefault();
     const mode = getSelectedAuthMode();
 
-    let url = `${API_BACKEND_URL}/api/auth/` + (mode === 'signup' ? 'register' : 'login');
-
     let user;
     if (mode === 'login') {
-      delete data.username;
       user = await login(authForm.email.value, authForm.password.value);
     }
     else if (mode === 'signup') {

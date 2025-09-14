@@ -15,6 +15,9 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('copy-resume-btn').addEventListener('click', async () => {
     openModal('copy-modal');
   });
+  document.getElementById('edit-title-btn').addEventListener('click', async () => {
+    openModal('title-modal');
+  });
 
   // Close Modals
   document.getElementById('close-preview').addEventListener('click', function() {
@@ -25,6 +28,9 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   document.getElementById('close-copy').addEventListener('click', async () => {
     closeModal('copy-modal');
+  });
+  document.getElementById('close-title').addEventListener('click', async () => {
+    closeModal('title-modal');
   });
 
 

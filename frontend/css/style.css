@@ -305,6 +305,11 @@ select:focus {
   color: #fff;
 }
 
+.btn-warning {
+  background: var(--warning);
+  color: #fff;
+}
+
 .btn-error {
   background: var(--error);
   color: #fff;
