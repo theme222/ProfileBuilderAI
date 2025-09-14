@@ -2,7 +2,7 @@
 # Backend API Documentation: 
 
 ## Custom Session Auth
-## Base URL : `http://localhost:3001/api/auth`
+**Base URL** : `http://localhost:3001/api/auth`
 
 ---
 
