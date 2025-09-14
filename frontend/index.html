@@ -18,6 +18,37 @@
   </header>
   <main>
     <form id="resume-form">
+      <div id="resume-management-area">
+        <div class="management-group">
+          <label for="resume-selector">Current Resume:</label>
+          <select id="resume-selector" name="resume-selector">
+            <option value="1">Resume 1</option>
+            <option value="2">Resume 2</option>
+            <option value="3">Resume 3</option>
+          </select>
+        </div>
+        <div class="management-group">
+          <button type="button" id="new-resume-btn" class="btn btn-success" title="New Resume">
+            <span>New</span>
+            <svg class="icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" viewBox="0 0 24 24">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5v14m8-7h-2m0 0h-2m2 0v2m0-2v-2M3 11h6m-6 4h6m11 4H4c-.55228 0-1-.4477-1-1V6c0-.55228.44772-1 1-1h16c.5523 0 1 .44772 1 1v12c0 .5523-.4477 1-1 1Z"/>
+            </svg>
+          </button>
+          <button type="button" id="copy-resume-btn" class="btn btn-info" title="Copy Resume">
+            <span>Copy From</span>
+            <svg class="icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" viewBox="0 0 24 24">
+              <path fill-rule="evenodd" d="M18 3a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-1V9a4 4 0 0 0-4-4h-3a1.99 1.99 0 0 0-1 .267V5a2 2 0 0 1 2-2h7Z" clip-rule="evenodd"/>
+              <path fill-rule="evenodd" d="M8 7.054V11H4.2a2 2 0 0 1 .281-.432l2.46-2.87A2 2 0 0 1 8 7.054ZM10 7v4a2 2 0 0 1-2 2H4v6a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3Z" clip-rule="evenodd"/>
+            </svg>
+          </button>
+          <button type="button" id="delete-resume-btn" class="btn btn-error" title="Delete Resume">
+            <span>Delete</span>
+            <svg class="icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" viewBox="0 0 24 24">
+              <path fill-rule="evenodd" d="M8.586 2.586A2 2 0 0 1 10 2h4a2 2 0 0 1 2 2v2h3a1 1 0 1 1 0 2v12a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V8a1 1 0 0 1 0-2h3V4a2 2 0 0 1 .586-1.414ZM10 6h4V4h-4v2Zm1 4a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0v-8Zm4 0a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0v-8Z" clip-rule="evenodd"/>
+            </svg>
+          </button>
+        </div>
+      </div>
       <section class="section" id="personal-info-section">
         <h2>Personal Info</h2>
         <div class="form-row">
@@ -33,18 +64,18 @@
           <input type="text" name="Address" placeholder="Address">
         </div>
       </section>
-      <section class="section" id="job-description" style="height: 15rem">
+      <section class="section" id="job-description">
         <h2>Job Description</h2>
         <div class="form-row">
           <input type="text" name="job-title" placeholder="Job Title" required>
         </div>
-        <div class="form-row">
+        <div class="form-row" style="height: 9.5rem;">
           <textarea name="summary" rows="6" placeholder="Paste job description here"></textarea>
         </div>
       </section>
-      <section class="section" id="summary-section" style="height: 11rem">
+      <section class="section" id="summary-section">
         <h2>Summary</h2>
-        <div class="form-row">
+        <div class="form-row" style="height: 9.5rem">
           <textarea name="summary" rows="6" placeholder="Write a short summary about yourself and what you do."></textarea>
           <button type="button" class="btn btn-outline-secondary btn-ai">
             <img src="assets/sparkles.svg" alt="AI Enhance" style="width:1.2em;height:1.2em;vertical-align:middle;margin-right:0.4em;">AI Enhance
@@ -81,6 +112,7 @@
       </div>
     </form>
   </main>
+
   <!-- Preview Modal -->
   <div id="preview-modal" class="modal hidden">
     <div class="modal-content">
@@ -165,6 +197,23 @@
             <button type="submit" class="btn btn-primary" style="width: 100%;" id="auth-form-submit">Continue</button>
           </div>
         </form>
+      </div>
+    </div>
+  </div>
+  <!-- Copy Modal -->
+  <div id="copy-modal" class="modal hidden">
+    <div class="modal-content" style="width: 40rem;">
+      <span class="close" id="close-copy">&times;</span>
+      <h2>Copy Resume</h2>
+      <div class="form-row">
+        <label for="copy-source-selector">Copy from:</label>
+        <select id="copy-source-selector" name="copy-source-selector">
+          <option value="1">Resume 1</option>
+          <option value="2">Resume 2</option>
+          <option value="3">Resume 3</option>
+        </select>
+
+        <button type="button" id="confirm-copy-btn" class="btn btn-primary">Confirm Copy</button>
       </div>
     </div>
   </div>

@@ -99,40 +99,40 @@ export function addDynamicEntry(sectionType) {
     case "work":
     case "experience":
       placeholder = {
-        role: "Job Title (e.g. Software Intern)",
-        place: "Company Name",
+        title: "Job Title (e.g. Software Intern)",
+        area: "Company Name",
         number: "Dates (e.g. Jun 2023 - Aug 2023)",
         description: "Describe your responsibilities and achievements",
       };
       break;
     case "projects":
       placeholder = {
-        role: "Project Title",
-        place: "Tech Stack (e.g. React, Node.js)",
+        title: "Project Title",
+        area: "Tech Stack (e.g. React, Node.js)",
         number: "Year or Duration",
         description: "Project description and your role",
       };
       break;
     case "skill":
       placeholder = {
-        role: "Skill Name (e.g. Python)",
-        place: "Category (e.g. Programming Language)",
+        title: "Skill Name (e.g. Python)",
+        area: "Category (e.g. Programming Language)",
         number: "Proficiency (1 - 10)",
         description: "Other Details (optional)",
       };
       break;
     case "certification":
       placeholder = {
-        role: "Certification Name",
-        place: "Issuing Organization",
+        title: "Certification Name",
+        area: "Issuing Organization",
         number: "Date Earned",
         description: "Credential ID or details (optional)",
       };
       break;
     default:
       placeholder = {
-        role: "Title/Role",
-        place: "Company/School",
+        title: "Title/Role",
+        area: "Company/School",
         number: "Date Range",
         description: "Description",
       };
@@ -145,8 +145,8 @@ export function addDynamicEntry(sectionType) {
         ${UpperFirst(sectionType)} Entry ${container.childElementCount + 1}
         <div class="close remove-btn" style="font-size: 0.9rem;">X</div>
       </h3>
-      <input type="text" name="${sectionType}-title" placeholder="${ placeholder.role }" value="" required>
-      <input type="text" name="${sectionType}-area" placeholder="${ placeholder.place }" value="" required>
+      <input type="text" name="${sectionType}-title" placeholder="${ placeholder.title }" value="" required>
+      <input type="text" name="${sectionType}-area" placeholder="${ placeholder.area }" value="" required>
       <input type="text" name="${sectionType}-number" placeholder="${ placeholder.number }" value="">
       <div class="textarea-container">
       <textarea name="${sectionType}-description" placeholder="${ placeholder.description }"></textarea>
