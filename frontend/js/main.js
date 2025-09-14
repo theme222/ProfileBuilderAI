@@ -61,6 +61,5 @@ document.addEventListener('DOMContentLoaded', () => {
 
   setupAuthToggle();
   renderAuthContent();
-  loadResumePreview();
 });
 // UI and API functions are imported globally for this skeleton

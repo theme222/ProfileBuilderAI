@@ -1,7 +1,8 @@
-import { UpperFirst } from "./misc.js";
+import { upperFirst } from "./misc.js";
 import { API_BACKEND_URL } from "./config.js";
 import { getAuthCookie, authData, deleteAuthCookie } from './auth.js';
 import { getUserProfile, register, login } from "./api.js";
+import { getCurrentResumeData, loadResumePreview } from "./resume.js";
 // ui.js
 
 /**
@@ -16,10 +17,8 @@ export function openModal(modalId) {
       renderAuthContent();
     }
     if (modalId === "preview-modal") {
-      // Load resume data from backend and render
-      // For now, using dummy data
-      const dummyResume = { id: 123 }; // Replace with actual resume ID or data
-      renderPreview(dummyResume);
+      const resumeData = getCurrentResumeData();
+      loadResumePreview(resumeData);
     }
   }
 }
@@ -125,8 +124,8 @@ export function addDynamicEntry(sectionType) {
       placeholder = {
         title: "Certification Name",
         area: "Issuing Organization",
-        number: "Date Earned",
-        description: "Credential ID or details (optional)",
+        number: "Date Earned / Credential ID",
+        description: "Other details (optional)",
       };
       break;
     default:
@@ -142,7 +141,7 @@ export function addDynamicEntry(sectionType) {
   entry.className = "dynamic-entry";
   entry.innerHTML = `
       <h3>
-        ${UpperFirst(sectionType)} Entry ${container.childElementCount + 1}
+        ${upperFirst(sectionType)} Entry ${container.childElementCount + 1}
         <div class="close remove-btn" style="font-size: 0.9rem;">X</div>
       </h3>
       <input type="text" name="${sectionType}-title" placeholder="${ placeholder.title }" value="" required>

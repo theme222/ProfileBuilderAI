@@ -1,4 +1,7 @@
+import { clamp } from "./misc.js";
+
 export const exampleResumeContent = {
+    title: "Resume 1",
     personalInfo: {
         name: "Jane Smith",
         email: "jane.smith@example.com",
@@ -50,6 +53,8 @@ export const exampleResumeContent = {
     ]
 };
 
+export const totalResumeData = []; 
+
 function setHiddenIfEmpty(sectionId, dataArray) {
     const section = document.getElementById(sectionId);
     if (!dataArray || dataArray.length === 0)  section.classList.add('hidden');
@@ -67,8 +72,124 @@ function getListBulletsFromText(text) {
     return `<ul>${bulletList}</ul>`;
 }
 
+function getSectionContent(entry, sectionName) { // Returns undefined if everything is null
+    const content = {
+        title: entry.querySelector(`input[name="${sectionName}-title"]`).value,
+        area: entry.querySelector(`input[name="${sectionName}-area"]`).value,
+        number: entry.querySelector(`input[name="${sectionName}-number"]`).value,
+        description: entry.querySelector(`textarea[name="${sectionName}-description"]`).value
+    }
+
+    if (!content.title && !content.area && !content.number && !content.description) return undefined;
+    else return content;
+}
+
+export function setCurrentResumeData(resumeData) {
+        // Set static personal info fields
+        const pi = resumeData.personalInfo || {};
+        document.querySelector('input[name="name"]').value = pi.name || '';
+        document.querySelector('input[name="email"]').value = pi.email || '';
+        document.querySelector('input[name="phone"]').value = pi.phone || '';
+        document.querySelector('input[name="linkedin"]').value = pi.linkedin || '';
+        document.querySelector('input[name="github"]').value = pi.github || '';
+        document.querySelector('input[name="address"]').value = pi.address || '';
+
+        // Set job title/description/summary
+        document.querySelector('input[name="jobTitle"]').value = resumeData.jobTitle || '';
+        document.querySelector('textarea[name="jobDescription"]').value = resumeData.jobDescription || '';
+        document.querySelector('textarea[name="summary"]').value = resumeData.summary || '';
+
+        // Helper to clear and repopulate dynamic entries
+        function setDynamicSection(section, dataArr) {
+                const container = document.getElementById(`${section}-entries`);
+                // Remove all existing dynamic entries
+                while (container && container.firstChild) container.removeChild(container.firstChild);
+                // Add new entries
+                (dataArr || []).forEach((item, idx) => {
+                        // Simulate addDynamicEntry
+                        const entry = document.createElement('div');
+                        entry.className = 'dynamic-entry';
+                        entry.innerHTML = `
+                                <h3>${section.charAt(0).toUpperCase() + section.slice(1)} Entry ${idx + 1}<div class="close remove-btn" style="font-size: 0.9rem;">X</div></h3>
+                                <input type="text" name="${section}-title" placeholder="Title" value="${item.title || ''}" required>
+                                <input type="text" name="${section}-area" placeholder="Area" value="${item.area || ''}" required>
+                                <input type="text" name="${section}-number" placeholder="Number" value="${item.number || ''}">
+                                <div class="textarea-container">
+                                    <textarea name="${section}-description" placeholder="Description">${item.description || ''}</textarea>
+                                    <button type="button" class="btn btn-outline-secondary btn-ai">
+                                        <img src="assets/sparkles.svg" alt="AI Enhance">AI Enhance
+                                    </button>
+                                </div>
+                        `;
+                        // Add remove event
+                        entry.querySelector('.remove-btn').addEventListener('click', () => entry.remove());
+                        container && container.appendChild(entry);
+                });
+        }
+
+        setDynamicSection('education', resumeData.education);
+        setDynamicSection('work', resumeData.work);
+        setDynamicSection('project', resumeData.projects);
+        setDynamicSection('skill', resumeData.skills);
+        setDynamicSection('certification', resumeData.certifications);
+}
+
+export function getCurrentResumeData() {
+    const formData = new FormData(document.getElementById('resume-form'));
+    const resumeData = {
+        personalInfo: {
+            name: formData.get('name'),
+            email: formData.get('email'),
+            phone: formData.get('phone'),
+            linkedin: formData.get('linkedin'),
+            github: formData.get('github'),
+            address: formData.get('address'),
+        },
+        jobTitle: formData.get('jobTitle'),
+        jobDescription: formData.get('jobDescription'),
+        summary: formData.get('summary'),
+        education: [],
+        work: [],
+        projects: [],
+        skills: [],
+        certifications: []
+    };
+
+    // Collect education entries
+    document.querySelectorAll('#education-entries .dynamic-entry').forEach(entry => {
+        const content = getSectionContent(entry, "education");
+        if (content) resumeData.education.push();
+    });
+
+    // Collect work entries
+    document.querySelectorAll('#work-entries .dynamic-entry').forEach(entry => {
+        const content = getSectionContent(entry, "work");
+        if (content) resumeData.work.push();
+    });
+
+    // Collect project entries
+    document.querySelectorAll('#project-entries .dynamic-entry').forEach(entry => {
+        const content = getSectionContent(entry, "project");
+        if (content) resumeData.projects.push();
+    });
+
+    // Collect skill entries
+    document.querySelectorAll('#skill-entries .dynamic-entry').forEach(entry => {
+        const content = getSectionContent(entry, "skill");
+        if (content) resumeData.skills.push();
+    });
+
+    // Collect certification entries
+    document.querySelectorAll('#certification-entries .dynamic-entry').forEach(entry => {
+        const content = getSectionContent(entry, "certification");
+        if (content) resumeData.certifications.push();
+    });
+
+    console.log(resumeData);
+    return resumeData;
+}
+
 export function loadResumePreview(resumeData) {
-    resumeData = exampleResumeContent; // For testing with example data
     // 1. Clear previous content to prevent duplication
     document.getElementById('preview-name').innerHTML = '';
     document.getElementById('preview-job-title').innerHTML = '';
@@ -111,7 +232,7 @@ export function loadResumePreview(resumeData) {
         const skillItem = document.createElement('li');
         skillItem.innerHTML = `
             <p>${skill.title || skill}</p>
-            <div><div style="width: ${(parseInt(skill.number) || 5) * 10}%"></div></div>
+            <div><div style="width: ${clamp(parseFloat(skill.number) || 5, 0, 10) * 10}%"></div></div>
         `;
         skillsList.appendChild(skillItem);
     });
