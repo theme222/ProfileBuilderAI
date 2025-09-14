@@ -2,7 +2,7 @@
 # Backend API Documentation: 
 
 ## Custom Session Auth
-**Base URL** : `http://localhost:3001/api/auth`
+**Base URL : `http://localhost:3001/api/auth`**
 
 ---
 
@@ -88,7 +88,7 @@ Retrieves the profile of the currently logged-in user. **This is a protected rou
 ---
 
 ## Resume Management (CRUD)
-**Base URL**: `http://localhost:3001/api/resumes`
+**Base URL : `http://localhost:3001/api/resumes`**
 
 ---
 
@@ -184,7 +184,7 @@ Deletes a specific resume by its unique ID.
 ---
 
 ## AI Enhancements
-**Base URL**: `http://localhost:3001/api/resumes`
+**Base URL : `http://localhost:3001/api/resumes`**
 
 ---
 
