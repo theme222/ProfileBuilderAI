@@ -10,8 +10,6 @@ const cors = require('cors');
 const authRoutes = require('./routes/authRoutes');
 const resumeRoutes = require('./routes/resumeRoutes');
 
-//const testRoutes = require('./routes/testRoutes'); // # test if database work or not (Delete)
-
 const app = express();
 
 // Middleware
@@ -27,8 +25,6 @@ connectDB();
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/resumes', resumeRoutes);
-
-//app.use('/api/test', testRoutes); // # test if database work or not (Delete)
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
