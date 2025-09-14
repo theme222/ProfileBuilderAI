@@ -28,16 +28,24 @@
 }
 
 /* --- Classic Professional Theme --- */
+.classic-professional {
+  --primary: #2c615f; /* Dark Teal */
+  --secondary: #5f9ea0; /* Lighter Teal */
+  --accent: #a7d8d5; /* Light Teal */
+  --dark: #1b3a3a; /* Darker Teal */
+  --text-color: #333;
+}
+
 .classic-professional .resume-sidebar {
-  background-color: #2c615f; /* Dark Teal */
+  background-color: var(--primary); /* Dark Teal */
   color: white;
   width: 35%;
-  padding: 2rem;
+  padding: 1.5rem;
   font-size: 0.9rem;
 }
 
 .classic-professional .resume-sidebar a {
-  color: #a7d8d5; /* Light teal for links */
+  color: var(--accent); /* Light teal for links */
   text-decoration: none;
 }
 .classic-professional .resume-sidebar a:hover {
@@ -54,7 +62,7 @@
   text-transform: uppercase;
   color: white;
   padding-bottom: 0.5rem;
-  border-bottom: 1px solid #5f9ea0; /* Lighter teal border */
+  border-bottom: 1px solid var(--secondary); /* Lighter teal border */
   margin-bottom: 1rem;
 }
 
@@ -72,14 +80,29 @@
   margin: 0;
 }
 .classic-professional .skills-list li {
-  margin-bottom: 0.3rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
+.classic-professional .skills-list li div {
+  width: 1.4in;
+  height: 0.1in;
+  background: var(--dark);
+  border-radius: 20px;
+}
+
+.classic-professional .skills-list li div div {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 20px;
+}
 
 .classic-professional .resume-main {
   width: 65%;
-  padding: 2.5rem;
+  padding: 1.5rem;
   background: white;
+  margin: 0 0;
 }
 
 .classic-professional .resume-header {
@@ -87,6 +110,8 @@
   margin-bottom: 2rem;
   border-bottom: 2px solid #333;
   padding-bottom: 0.5rem;
+  text-align: center;
+  box-shadow: none;
 }
 .classic-professional .resume-header h1 {
   font-family: 'Georgia', serif;
