@@ -11,5 +11,8 @@
   },
   "devDependencies": {
     "five-server": "^0.4.4"
+  },
+  "dependencies": {
+    "cors": "^2.8.5"
   }
 }
