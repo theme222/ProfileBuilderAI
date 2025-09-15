@@ -17,40 +17,38 @@
     </nav>
   </header>
   <main>
-    <form id="resume-form">
-      <div id="resume-management-area">
-        <div class="management-group">
-          <label for="resume-selector">Current Resume:</label>
-          <select id="resume-selector" name="resume-selector">
-            <option value="1">Resume 1</option>
-            <option value="2">Resume 2</option>
-            <option value="3">Resume 3</option>
-          </select>
-        </div>
-        <div class="management-group">
 
-          <button type="button" id="new-resume-btn" class="btn btn-success" title="New Resume">
-            <span>New</span>
-            <img src="assets/adddocument.svg" alt="" class="icon">
-          </button>
-
-          <button type="button" id="edit-title-btn" class="btn btn-warning" title="Edit Resume Title">
-            <span>Edit Title</span>
-            <img src="assets/edit.svg" alt="" class="icon">
-          </button>
-
-          <button type="button" id="copy-resume-btn" class="btn btn-info" title="Copy Resume">
-            <span>Copy From</span>
-            <img src="assets/copy.svg" alt="" class="icon">
-          </button>
-
-          <button type="button" id="delete-resume-btn" class="btn btn-error" title="Delete Resume">
-            <span>Delete</span>
-            <img src="assets/delete.svg" alt="" class="icon">
-          </button>
-
-        </div>
+    <div id="resume-management-area">
+      <div class="management-group">
+        <label for="resume-selector">Current Resume:</label>
+        <select id="resume-selector" name="resume-selector">
+          <option value="none" disabled>Select A Resume</option>
+        </select>
       </div>
+      <div class="management-group">
+        <button type="button" id="new-resume-btn" class="btn btn-success" title="New Resume">
+          <span>New</span>
+          <img src="assets/adddocument.svg" alt="" class="icon">
+        </button>
+
+        <button type="button" id="edit-title-btn" class="btn btn-warning" title="Edit Resume Title">
+          <span>Edit Title</span>
+          <img src="assets/edit.svg" alt="" class="icon">
+        </button>
+
+        <button type="button" id="copy-resume-btn" class="btn btn-info" title="Copy Resume">
+          <span>Copy From</span>
+          <img src="assets/copy.svg" alt="" class="icon">
+        </button>
+
+        <button type="button" id="delete-resume-btn" class="btn btn-error" title="Delete Resume">
+          <span>Delete</span>
+          <img src="assets/delete.svg" alt="" class="icon">
+        </button>
+      </div>
+    </div>
+
+    <form id="resume-form" class="hidden">
       <section class="section" id="personal-info-section">
         <h2>Personal Info</h2>
         <div class="form-row">

@@ -1,6 +1,8 @@
 // main.js
-import { loadResumePreview } from './resume.js';
-import { openModal, closeModal, addDynamicEntry, renderAuthContent, setupAuthToggle, updateNavbarAuth } from './ui.js';
+import { authData } from './auth.js';
+import { renderForm } from './form.js';
+import { Resume, addNewResume, changeResumeTitle, copyFromResume, currentResume, onSaveResume, resumeList, setCurrentResume } from './resume.js';
+import { openModal, closeModal, addDynamicEntry, renderAuthContent, setupAuthToggle, updateNavbarAuth, renderResumeSelect } from './ui.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   console.log('App initialized');
@@ -54,12 +56,40 @@ document.addEventListener('DOMContentLoaded', () => {
   // Form submit
   document.getElementById('resume-form').addEventListener('submit', (e) => {
     e.preventDefault();
-    // Collect form data and call saveResume
-    console.log('Save resume');
+    onSaveResume();
   });
+
+  document.getElementById("resume-selector").addEventListener('change', (e) => {
+    currentResume = resumeList[parseInt(e.target.value)];
+    console.log(`Changing to ${currentResume}`);
+    renderForm();
+  });
+
+  document.getElementById("new-resume-btn").addEventListener('click', () => {
+    addNewResume();
+  })
+
+  document.getElementById("confirm-title-btn").addEventListener('click', () => {
+    changeResumeTitle(document.getElementById("title-input").value);
+  })
+
+  document.getElementById("confirm-copy-btn").addEventListener('click', () => {
+    copyFromResume(document.getElementById('copy-source-selector').value);
+  })
 
 
   setupAuthToggle();
   renderAuthContent();
+
+  if (authData.isAuthenticated) {
+    // Load the first resume
+  }
+  else {
+    // Create a new resume (But obviously don't need to sync yet)
+    addNewResume();
+  }
+
+  renderResumeSelect();
+  renderForm();
 });
 // UI and API functions are imported globally for this skeleton

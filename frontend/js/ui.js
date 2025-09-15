@@ -1,8 +1,8 @@
 import { upperFirst } from "./misc.js";
-import { API_BACKEND_URL } from "./config.js";
 import { getAuthCookie, authData, deleteAuthCookie } from './auth.js';
 import { getUserProfile, register, login } from "./api.js";
-import { getCurrentResumeData, loadResumePreview } from "./resume.js";
+import { currentResume, loadResumePreview, resumeList } from "./resume.js";
+import { getCurrentFormData } from "./form.js";
 // ui.js
 
 /**
@@ -17,7 +17,7 @@ export function openModal(modalId) {
       renderAuthContent();
     }
     if (modalId === "preview-modal") {
-      const resumeData = getCurrentResumeData();
+      const resumeData = getCurrentFormData();
       loadResumePreview(resumeData);
     }
   }
@@ -35,47 +35,10 @@ export function closeModal(modalId) {
 }
 
 /**
- * Renders the resume preview in the modal.
- * @param {Object} resumeData
- */
-function renderPreview(resumeData) {
-  console.log("renderPreview called", resumeData);
-  // TODO: Render resume preview
-  // ✅ Call backend to load resume and then render
-  const previewContainer = document.getElementById("resume-preview");
-  if (!previewContainer) return;
-
-  fetch(`${API_BACKEND_URL}/api/resumes/${resumeData.id}`, { credentials: "include" })
-    .then((res) => res.json())
-    .then((data) => {
-      previewContainer.innerHTML = `
-        <h2>${data.name || "Your Name"}</h2>
-        <p><strong>Email:</strong> ${data.email || ""}</p>
-        <p><strong>Summary:</strong> ${data.summary || ""}</p>
-        <h3>Experience</h3>
-        <ul>
-          ${(data.experience || [])
-            .map(
-              (exp) => `
-              <li>
-                <strong>${exp.role || ""}</strong> at ${exp.company || ""} 
-                (${exp.start || ""} - ${exp.end || ""})
-                <p>${exp.description || ""}</p>
-              </li>
-            `
-            )
-            .join("")}
-        </ul>
-      `;
-    })
-    .catch((err) => console.error("Failed to render preview", err));
-}
-
-/**
  * Adds a dynamic entry (education, work, etc.)
  * @param {string} sectionType
  */
-export function addDynamicEntry(sectionType) {
+export function addDynamicEntry(sectionType, values = {title: "", area: "", number: "", description: ""}) {
   console.log(`addDynamicEntry called for ${sectionType}`);
   // TODO: Add entry fields to DOM
   // ✅ Still adds to DOM, but also persists to backend with PUT /api/resumes/:id
@@ -96,7 +59,6 @@ export function addDynamicEntry(sectionType) {
       };
       break;
     case "work":
-    case "experience":
       placeholder = {
         title: "Job Title (e.g. Software Intern)",
         area: "Company Name",
@@ -144,11 +106,11 @@ export function addDynamicEntry(sectionType) {
         ${upperFirst(sectionType)} Entry ${container.childElementCount + 1}
         <div class="close remove-btn" style="font-size: 0.9rem;">X</div>
       </h3>
-      <input type="text" name="${sectionType}-title" placeholder="${ placeholder.title }" value="" required>
-      <input type="text" name="${sectionType}-area" placeholder="${ placeholder.area }" value="" required>
-      <input type="text" name="${sectionType}-number" placeholder="${ placeholder.number }" value="">
+      <input type="text" name="${sectionType}-title" placeholder="${ placeholder.title }" value="${ values.title }" required>
+      <input type="text" name="${sectionType}-area" placeholder="${ placeholder.area }" value="${ values.area }" required>
+      <input type="text" name="${sectionType}-number" placeholder="${ placeholder.number }" value="${ values.number }">
       <div class="textarea-container">
-      <textarea name="${sectionType}-description" placeholder="${ placeholder.description }"></textarea>
+      <textarea name="${sectionType}-description" placeholder="${ placeholder.description }">${ values.description }</textarea>
       <button type="button" class="btn btn-outline-secondary btn-ai">
         <img src="assets/sparkles.svg" alt="AI Enhance" style="width:1.2em;height:1.2em;vertical-align:middle;margin-right:0.4em;">AI Enhance
       </button>
@@ -285,4 +247,26 @@ export function setupAuthToggle() {
   radios.forEach(radio => {
     radio.addEventListener('change', renderAuthContent);
   });
+}
+
+export function renderResumeSelect() {
+  const resumeSelect = document.getElementById("resume-selector");
+
+  resumeSelect.innerHTML = '';
+
+  resumeList.forEach((resume, index) => {
+    resumeSelect.innerHTML += `
+      <option value="${index}" ${resume === currentResume ? "selected": ""}>${resume.title}</option>
+    `;
+  })
+
+  const copyResumeSelect = document.getElementById("copy-source-selector");
+
+  copyResumeSelect.innerHTML = '';
+
+  resumeList.forEach((resume, index) => {
+    copyResumeSelect.innerHTML += `
+      <option value="${index}" ${resume === currentResume ? "selected": ""}>${resume.title}</option>
+    `;
+  })
 }
