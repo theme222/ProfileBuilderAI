@@ -76,7 +76,7 @@ export async function register(username, email, password) {
  * @param {Object} resumeData
  * @returns {Promise<Object>}
  */
-async function saveResume(resumeData) {
+export async function saveResume(resumeData) {
   console.log("saveResume called", resumeData);
   try {
     const res = await fetch(`${API_BACKEND_URL}/api/resumes`, {
@@ -98,7 +98,7 @@ async function saveResume(resumeData) {
  * @param {string} id
  * @returns {Promise<Object>}
  */
-async function getResumeById(id) {
+export async function getResumeById(id) {
   console.log('getResumeById called', id);
 
   try {
@@ -110,12 +110,25 @@ async function getResumeById(id) {
   }
 }
 
+
+export async function getAllUserResumes() {
+  console.log('getAllUserResumes called');
+
+  try {
+    const res = await fetch(`${API_BACKEND_URL}/api/resumes/`);
+    if (!res.ok) throw new Error('Could not get all user resumes');
+    return await res.json();
+  } catch (err) {
+    console.error('Get resume error:', err);
+  }
+}
+
 /**
  * Calls AI to enhance a prompt.
  * @param {string} prompt
  * @returns {Promise<Object>}
  */
-async function callAiEnhance(prompt) {
+export async function callAiEnhance(prompt) {
   console.log('callAiEnhance called', prompt);
   try {
     const res = await fetch(`${API_BACKEND_URL}/api/ai/enhance-summary`, {

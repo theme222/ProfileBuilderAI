@@ -37,7 +37,7 @@ export class Resume {
    */
   getData() {
     return {
-      isSynced: this.isSynced,
+      // isSynced: this.isSynced,
       title: this.title,
       personalInfo: this.personalInfo,
       jobTitle: this.jobTitle,
@@ -55,10 +55,10 @@ export class Resume {
     if (!from) throw new Error("Copy from is not defined");
     if (!to) throw new Error("Copy destination is not defined");
     
-    console.log(from);
+    // console.log(from);
     // from and to are both Resume objects
     // to._id = from._id || null;
-    to.isSynced = from.isSynced || false;
+    // to.isSynced = from.isSynced || false;
     to.title = from.title || "Untitled Resume";
 
     to.personalInfo = {

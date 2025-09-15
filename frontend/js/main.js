@@ -1,10 +1,11 @@
 // main.js
+import { getAllUserResumes } from './api.js';
 import { authData } from './auth.js';
 import { renderForm } from './form.js';
 import { Resume, addNewResume, changeResumeTitle, copyFromResume, currentResume, onSaveResume, resumeList, setCurrentResume } from './resume.js';
 import { openModal, closeModal, addDynamicEntry, renderAuthContent, setupAuthToggle, updateNavbarAuth, renderResumeSelect } from './ui.js';
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
   console.log('App initialized');
 
   // Open Modals
@@ -60,7 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   document.getElementById("resume-selector").addEventListener('change', (e) => {
-    currentResume = resumeList[parseInt(e.target.value)];
+    setCurrentResume(resumeList[parseInt(e.target.value)]);
     console.log(`Changing to ${currentResume}`);
     renderForm();
   });
@@ -81,8 +82,15 @@ document.addEventListener('DOMContentLoaded', () => {
   setupAuthToggle();
   renderAuthContent();
 
-  if (authData.isAuthenticated) {
-    // Load the first resume
+  if (authData.isAuthenticated) { // Load user saved resumes
+    const loadedResumes = await getAllUserResumes();
+    if (loadedResumes && Array.isArray(loadedResumes)) {
+      loadedResumes.forEach(element => {
+        resumeList.push(new Resume(element)); // Ensure it is of type Resume.
+      });
+    }
+    // if (resumeList.length > 0) 
+    //   setCurrentResume(resumeList[0]);
   }
   else {
     // Create a new resume (But obviously don't need to sync yet)

@@ -76,7 +76,7 @@ export function getCurrentFormData() {
 }
 
 export function setCurrentFormData(resumeData) {
-  console.log(resumeData);
+  // console.log(resumeData);
   // Set static personal info fields
   const pi = resumeData.personalInfo || {};
   document.querySelector('input[name="name"]').value = pi.name || "";
