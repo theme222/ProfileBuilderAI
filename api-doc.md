@@ -184,58 +184,55 @@ Deletes a specific resume by its unique ID.
 ---
 
 ## AI Enhancements
-**Base URL : `http://localhost:3001/api/resumes`**
-
----
+**Base URL**: `http://localhost:3001/api/resumes`
 
 ### 1. Enhance a Resume Summary
-Uses AI to rewrite and improve the summary of a specific resume.
+Uses AI to rewrite a summary, optionally tailoring it to a job description.
 
 * **Endpoint**: `POST /:id/enhance`
-* **URL Parameter**: `id` (string, required): The ID of the resume containing the summary.
 * **Request Body**: `JSON`
     ```json
     {
-      "summary": "I am a programmer and I worked on some web stuff."
+      "summary": "I am a software developer.",
+      "jobTitle": "Senior Frontend Engineer",
+      "jobDescription": "Seeking an engineer with 5+ years of React experience..."
     }
     ```
+    * `summary` (string): **Required.**
+    * `jobTitle`, `jobDescription` (strings): **Optional.**
 * **Success Response (200 OK)**:
-    * Returns a JSON object with the AI-generated summary.
     ```json
     {
-      "improvedSummary": "Detail-oriented software developer with a proven track record in web application development. Adept at leveraging modern technologies to build intuitive and efficient user experiences."
+      "enhancedText": "Results-oriented software developer with a strong background in frontend technologies...\n"
     }
     ```
-* **Error Responses**:
-    * **400 Bad Request**: If the `summary` field is missing.
-    * **401 Unauthorized**: If no valid token is provided.
-    * **500 Internal Server Error**: If the AI service fails.
 
-### 2. Generate Work Experience Bullet Points
-Uses AI to generate professional, achievement-oriented bullet points for a work experience entry.
+### 2. Generate Enhanced Description for a Resume Section
+Uses AI to rewrite the description for any resume section (work, education, etc.), optionally tailoring it to a job.
 
-* **Endpoint**: `POST /:id/bullets`
-* **URL Parameter**: `id` (string, required): The ID of the resume this experience belongs to.
+* **Endpoint**: `POST /:id/description`
 * **Request Body**: `JSON`
     ```json
     {
-      "jobTitle": "Junior Developer",
-      "company": "Tech Solutions Inc.",
-      "experienceDescription": "I fixed bugs and helped build new pages using React."
+      "sectionType": "work",
+      "data": {
+        "title": "Software Intern",
+        "area": "Tech Solutions Inc.",
+        "number": "Jun 2024 - Aug 2024",
+        "description": "I fixed bugs and helped with a new feature."
+      },
+      "context": {
+        "jobTitle": "Junior Frontend Developer (React)",
+        "jobDescription": "Seeking a developer skilled in React..."
+      }
     }
     ```
+    * `sectionType` (string): **Required.** (`work`, `education`, `projects`, `skill`, `certification`).
+    * `data` (object): **Required.** Contains the details of the item.
+    * `context` (object): **Optional.** Contains job details for tailoring.
 * **Success Response (200 OK)**:
-    * Returns a JSON object with an array of AI-generated bullet points.
     ```json
     {
-      "bullets": [
-        "Spearheaded the development of new user-facing features using React.js, resulting in a 15% increase in user engagement.",
-        "Collaborated with senior developers to diagnose and resolve critical bugs, improving application stability by 30%.",
-        "Contributed to the maintenance of a large-scale codebase, ensuring adherence to best practices and coding standards."
-      ]
+      "enhancedText": "Collaborated with a team to resolve critical bugs...\nDeveloped a new user-facing feature using React...\n"
     }
     ```
-* **Error Responses**:
-    * **400 Bad Request**: If required fields are missing.
-    * **401 Unauthorized**: If no valid token is provided.
-    * **500 Internal Server Error**: If the AI service fails.
