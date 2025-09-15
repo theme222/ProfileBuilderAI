@@ -209,8 +209,7 @@ export async function renderAuthContent() {
         </h2>
         <button id="logout-btn" class="btn btn-primary auth-logout-btn">Logout</button>
       </div>`;
-      document.querySelector('.modal-content').style.maxWidth = '320px';
-      document.querySelector('.modal-content').style.minWidth = '220px';
+
       document.getElementById('logout-btn').onclick = async function() {
         // Remove cookie and reload UI
         authData.isAuthenticated = false;

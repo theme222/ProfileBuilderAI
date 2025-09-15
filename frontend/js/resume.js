@@ -238,6 +238,11 @@ export function loadResumePreview(resumeData) {
     });
     skillsContainer.appendChild(skillsList);
 
+    // Populate Summary Section
+    const summaryContainer = setHiddenIfEmpty('preview-summary', resumeData.summary); // This technically works but summary isn't a list
+    summaryContainer.className = 'main-entry';
+    summaryContainer.innerHTML = resumeData.summary;
+
     // 4. Populate Main Content Section (Work Experience)
     const workContainer = setHiddenIfEmpty('preview-work', resumeData.work);
 
