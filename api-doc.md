@@ -207,10 +207,10 @@ Uses AI to rewrite a summary, optionally tailoring it to a job description.
     }
     ```
 
-### 2. Generate Enhanced Description for a Resume Section
+### 2. Generate Enhanced Description for a Resume Section (generateBullets)
 Uses AI to rewrite the description for any resume section (work, education, etc.), optionally tailoring it to a job.
 
-* **Endpoint**: `POST /:id/description`
+* **Endpoint**: `POST /:id/bullets`
 * **Request Body**: `JSON`
     ```json
     {
