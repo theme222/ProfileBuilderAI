@@ -184,6 +184,9 @@ export async function renderAuthContent() {
         authData.isAuthenticated = false;
         authData.username = null;
         deleteAuthCookie();
+
+        saveOptions.autosave = false;
+        saveOptions.timeOfSave = null;
         renderSaveButtonAndInfo();
 
         resumeList.length = 0; // Clear list
@@ -253,11 +256,13 @@ export async function renderAuthContent() {
       });
     }
     console.log(resumeList);
-    saveOptions.autosave = true;
     if (resumeList.length > 0) 
       setCurrentResume(resumeList[0]);
     renderResumeSelect();
     renderForm();
+
+    saveOptions.autosave = true;
+    renderSaveButtonAndInfo();
 
   };
 }

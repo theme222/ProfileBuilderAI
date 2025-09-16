@@ -21,13 +21,12 @@ export async function enhanceSummary() {
 
     aiData.isPrompting = true;
     const enhanced = await callAiEnhance();
-    console.log(enhanced)
+    aiData.isPrompting = false;
 
+    if (!enhanced) return; // Something prob went wrong
     const textarea = document.querySelector('textarea[name="summary"]');
     textarea.value = enhanced.enhancedText;
     syncCurrentResume();
-
-    aiData.isPrompting = false;
 }
 
 export async function enhanceBullet(section, sectionType) {
@@ -55,11 +54,11 @@ export async function enhanceBullet(section, sectionType) {
 
     aiData.isPrompting = true;
     const enhanced = await callAiBullets(sectionType, sectionData);
+    aiData.isPrompting = false;
 
-    console.log(enhanced)
+    if (!enhanced) return; // Something prob went wrong
     const textarea = section.querySelector(`textarea[name="${sectionType}-description"]`);
     textarea.value = enhanced.enhancedText;
     syncCurrentResume();
 
-    aiData.isPrompting = false;
 }

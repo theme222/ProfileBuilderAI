@@ -26,7 +26,7 @@
   <main>
     <div id="resume-management-area">
 
-      <div class="management-group">
+      <div class="management-group" style="flex: 1">
         <label for="resume-selector" class="hidden-sm">Current Resume:</label>
         <select id="resume-selector" name="resume-selector">
           <option value="none" disabled>Select A Resume</option>
@@ -111,16 +111,16 @@
         <div id="certification-entries"></div>
         <button type="button" class="btn btn-accent" id="add-certification-btn">Add Certification</button>
       </section>
-      <div class="form-actions" id="autosave-row">
-        <span id="autosave-info">sadffdsa</span>
-        <button id="autosave-btn" class="btn btn-outline-error">Autosave</button>
-      </div>
     </form>
+    <div class="form-actions" id="autosave-row">
+      <span id="autosave-info">Loading...</span>
+      <button id="autosave-btn" class="btn btn-outline-error">Autosave</button>
+    </div>
   </main>
 
   <!-- Preview Modal -->
   <div id="preview-modal" class="modal hidden">
-    <div class="modal-content">
+    <div class="modal-content" style="padding-bottom: 0;">
       <span class="close" id="close-preview">&times;</span>
 
         <div class="preview-controls">
@@ -179,7 +179,7 @@
       </div>
 
       <div id="preview-save">
-        <button class="btn btn-accent" id="print-btn">Save to PDF / Print</button>
+        <button class="btn btn-info" id="print-btn">Save to PDF / Print</button>
       </div>
 
     </div>
@@ -187,13 +187,13 @@
   <!-- Auth Modal -->
   <div id="auth-modal" class="modal hidden">
     <div class="modal-content" style="width: 35rem;">
+      <span class="close" id="close-auth">&times;</span>
       <div class="auth-toggle">
         <input type="radio" id="login-radio" name="auth-mode" value="login" checked>
         <label for="login-radio" class="btn btn-outline-primary auth-toggle-btn">Login</label>
         <input type="radio" id="signup-radio" name="auth-mode" value="signup">
         <label for="signup-radio" class="btn btn-outline-primary auth-toggle-btn">Signup</label>
       </div>
-      <span class="close" id="close-auth">&times;</span>
       <div id="auth-content">
         <form id="auth-form" class="auth-form">
           <div class="form-row" id="form-username-row">

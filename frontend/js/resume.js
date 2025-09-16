@@ -206,6 +206,7 @@ export function changeResumeTitle(title) {
 export function copyFromResume(index) {
   if (!resumeList[index]) throw new Error("Index not found");
   Resume.copyData(resumeList[index], currentResume);
+  currentResume.isSynced = false;
   renderForm();
 }
 
@@ -235,6 +236,22 @@ export function printResume() {
         <link rel="stylesheet" href="css/resumeStyles/classicProfessional.css">
       </head>
       <style>
+        /* Reset margins & force full-page content */
+        @page {
+          margin: 0;
+        }
+        html, body {
+          margin: 0;
+          padding: 0;
+          height: 100%;
+          width: 100%;
+        }
+        #print-container {
+          min-height: 100vh;   /* Fill full page height */
+          width: 100%;
+          box-sizing: border-box;
+        }
+
         @media print {
           * {
             -webkit-print-color-adjust: exact !important;
@@ -243,7 +260,7 @@ export function printResume() {
         }
       </style>
       <body>
-        <div id="preview-content">
+        <div id="print-container">
           ${content}
         </div>
       </body>

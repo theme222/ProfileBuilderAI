@@ -2,6 +2,9 @@
 
 /* Controls at the top of the modal */
 .preview-controls {
+  position: sticky;
+  top: 0;
+  left: 0;
   padding: 0.5rem 1rem;
   background: var(--base-300);
   border-bottom: 1px solid var(--base-200);
@@ -11,6 +14,7 @@
   gap: 0.5rem;
   border-radius: 4px;
 }
+
 .preview-controls label {
   font-weight: 600;
   color: var(--neutral);
@@ -280,7 +284,7 @@ button .icon {
   z-index: 1000;
 }
 
-.modal.hidden {
+.modal .hidden {
   display: none;
 }
 
@@ -304,12 +308,13 @@ button .icon {
 }
 
 .close {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
+  position: sticky;
+  top: 0;
+  left: 98%;
   font-size: 1.5rem;
   color: var(--neutral);
   cursor: pointer;
+  z-index: 100000;
 }
 
 .auth-form {
@@ -421,18 +426,20 @@ h3 {
 }
 
 #preview-content {
-  height: 11in;
+  height: 11.7in;
   width: 8.3in;
 }
 
 #preview-save {
+  position: sticky;
+  bottom: 4rem;
+  left: 0;
   display: flex;
-  width: 8.3in;
+  width: 100%;
   justify-content: center;
   align-items: center;
-  margin: 4rem 0;
+  margin: 0.5rem 0;
 }
-
 
 #resume-management-area {
   display: flex;
@@ -443,18 +450,17 @@ h3 {
   background-color: var(--base-200);
   border-bottom: 2px solid var(--base-300);
   border-radius: 8px 8px 0 0; /* Rounded top corners */
-  gap: 0.5rem;
+  gap: 0.8rem;
 }
 
 #resume-selector {
-  min-width: 8rem;
+  width: 100%;
   text-overflow: ellipsis;
-  flex: 0;
 }
 
 .management-group {
   display: flex;
-  justify-content: start;
+  justify-content: center;
   align-items: center;
   width: auto;
   gap: 0.5rem
@@ -463,7 +469,6 @@ h3 {
 .management-group label {
   font-weight: 600;
   min-width: 6rem;
-  flex: 0.9 0;
   color: var(--neutral);
 }
 

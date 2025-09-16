@@ -9,7 +9,7 @@ const resumeSchema = new mongoose.Schema({
   jobTitle: { type: String, default: ''},
   jobDescription: { type: String, default: ''},
   education: { type: [Object], default: [] },
-  workExperience: { type: [Object], default: [] },
+  work: { type: [Object], default: [] },
   projects: { type: [Object], default: [] },
   skills: { type: [Object], default: [] },
   certifications: { type: [Object], default: [] },
