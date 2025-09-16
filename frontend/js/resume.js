@@ -1,12 +1,13 @@
 import { authData } from "./auth.js";
 import { getCurrentFormData, renderForm } from "./form.js";
 import { clamp, genRandomId } from "./misc.js";
+import { deleteList } from "./save.js";
 import { renderResumeSelect } from "./ui.js";
 
 export class Resume {
   constructor(data = {}) {
     this._id = data._id || null;// I'm not checking for the case when the ids are the same. Goodluck with that xd.
-    this.isSynced = data.isSynced || false;
+    this.isSynced = data.isSynced || false; // Id is invalid
     this.title = data.title || "Untitled Resume";
 
     this.personalInfo = {
@@ -59,7 +60,7 @@ export class Resume {
     // from and to are both Resume objects
     // to._id = from._id || null;
     // to.isSynced = from.isSynced || false;
-    to.title = from.title || "Untitled Resume";
+    // to.title = from.title || "Untitled Resume";
 
     to.personalInfo = {
       name: "",
@@ -80,6 +81,45 @@ export class Resume {
     to.projects = from.projects || [];
     to.skills = from.skills || [];
     to.certifications = from.certifications || [];
+  }
+
+  static isSame(a, b) {
+    if (a === b) return true;
+    if (!a || !b) return false;
+    // Helper for deep compare
+    function deepEqual(x, y) {
+      if (x === y) return true;
+      if (typeof x !== typeof y) return false;
+      if (typeof x !== 'object' || x === null || y === null) return false;
+      if (Array.isArray(x) !== Array.isArray(y)) return false;
+      if (Array.isArray(x)) {
+        if (x.length !== y.length) return false;
+        for (let i = 0; i < x.length; i++) {
+          if (!deepEqual(x[i], y[i])) return false;
+        }
+        return true;
+      }
+      const xKeys = Object.keys(x);
+      const yKeys = Object.keys(y);
+      if (xKeys.length !== yKeys.length) return false;
+      for (let key of xKeys) {
+        if (!y.hasOwnProperty(key)) return false;
+        if (!deepEqual(x[key], y[key])) return false;
+      }
+      return true;
+    }
+    // Compare all relevant fields
+    return (
+      deepEqual(a.personalInfo, b.personalInfo) &&
+      a.jobTitle === b.jobTitle &&
+      a.jobDescription === b.jobDescription &&
+      a.summary === b.summary &&
+      deepEqual(a.education, b.education) &&
+      deepEqual(a.work, b.work) &&
+      deepEqual(a.projects, b.projects) &&
+      deepEqual(a.skills, b.skills) &&
+      deepEqual(a.certifications, b.certifications)
+    );
   }
 }
 
@@ -151,7 +191,6 @@ export function setCurrentResume(resume) {currentResume = resume;} // Setter bec
 // ***** MANAGEMENT BUTTONS ****** //
 
 export function addNewResume() {
-  syncCurrentResume();
   setCurrentResume(new Resume());
   resumeList.push(currentResume);
   renderResumeSelect();
@@ -160,29 +199,34 @@ export function addNewResume() {
 
 export function changeResumeTitle(title) {
   currentResume.title = title;
+  console.log(currentResume);
   renderResumeSelect();
 }
 
 export function copyFromResume(index) {
-  syncCurrentResume(); // Incase you copy from yourself lol
   if (!resumeList[index]) throw new Error("Index not found");
   Resume.copyData(resumeList[index], currentResume);
   renderForm();
 }
 
-export function deleteResume() {
+export function deleteCurrentResume() {
   const currResumeIndex = resumeList.indexOf(currentResume);
   if (currResumeIndex === -1) 
       throw new Error("Could not find current resume in resume list");
   resumeList.splice(currResumeIndex, 1);
+  deleteList.push(currentResume);
   currentResume = null;
+  renderForm();
 }
 
 // ***** MANAGEMENT BUTTONS ****** //
 
 export function syncCurrentResume() {
-  if (currentResume) 
-    Resume.copyData(getCurrentFormData(), currentResume); // Updates current resume.
+  const currFormData = getCurrentFormData();
+  if (currentResume && !Resume.isSame(currFormData, currentResume)) {
+    Resume.copyData(currFormData, currentResume); // Updates current resume.
+    currentResume.isSynced = false;
+  }
 }
 
 function setHiddenIfEmpty(sectionId, dataArray) {

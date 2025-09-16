@@ -1,6 +1,7 @@
 // api.js
 import { authData } from './auth.js';
 import { API_BACKEND_URL } from './config.js';
+import { currentResume, Resume } from './resume.js';
 
 
 export async function getUserProfile()
@@ -73,70 +74,135 @@ export async function register(username, email, password) {
 
 /**
  * Saves a resume.
- * @param {Object} resumeData
+ * @param {Resume} resumeData
  * @returns {Promise<Object>}
  */
 export async function saveResume(resumeData) {
   console.log("saveResume called", resumeData);
+  if (resumeData._id === null) throw new Error(`Resume doesn't have an id, ${resumeData}`);
   try {
-    const res = await fetch(`${API_BACKEND_URL}/api/resumes`, {
-      method: 'POST',
+    const res = await fetch(`${API_BACKEND_URL}/api/resumes/${resumeData._id}`, {
+      method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       credentials: 'include',
-      body: JSON.stringify(resumeData)
+      body: JSON.stringify(resumeData.getData())
     });
 
     if (!res.ok) throw new Error('Failed to save resume');
-    return await res.json();
+    resumeData.isSynced = true;
+
+    console.log(await res.json());
   } catch (err) {
     console.error('Save resume error:', err);
   }
 }
 
 /**
- * Gets a resume by ID.
- * @param {string} id
+ * Creates a new resume.
+ * @param {Resume} resumeData
  * @returns {Promise<Object>}
  */
-export async function getResumeById(id) {
-  console.log('getResumeById called', id);
-
+export async function createResume(resumeData) {
+  console.log("new resume called", resumeData);
   try {
-    const res = await fetch(`${API_BACKEND_URL}/api/resumes/${id}`);
-    if (!res.ok) throw new Error('Resume not found');
-    return await res.json();
+    const res = await fetch(`${API_BACKEND_URL}/api/resumes`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+      body: JSON.stringify(resumeData.getData())
+    });
+
+    if (!res.ok) throw new Error('Failed to create resume');
+    const resume = await res.json();
+    Resume.copyData(new Resume(resume), resumeData);
+    resumeData.isSynced = true;
+    return resumeData;
   } catch (err) {
-    console.error('Get resume error:', err);
+    console.error('Save resume error:', err);
   }
 }
 
+/**
+ * Creates a new resume.
+ * @param {Resume} resumeData
+ * @returns {Promise<Object>}
+ */
+export async function deleteResume(resumeData) {
+  console.log("delete resume called", resumeData);
+  if (resumeData._id === null) throw new Error(`Resume doesn't have an id, ${resumeData}`);
+  try {
+    const res = await fetch(`${API_BACKEND_URL}/api/resumes/${resumeData._id}`, {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+    });
+
+    if (!res.ok) throw new Error('Failed to create resume');
+    console.log(await res.json());
+
+  } catch (err) {
+    console.error('Save resume error:', err);
+  }
+}
 
 export async function getAllUserResumes() {
-  console.log('getAllUserResumes called');
+  console.log("getAllUserResumes called");
 
   try {
     const res = await fetch(`${API_BACKEND_URL}/api/resumes/`);
-    if (!res.ok) throw new Error('Could not get all user resumes');
+    if (!res.ok) throw new Error("Could not get all user resumes");
     return await res.json();
   } catch (err) {
-    console.error('Get resume error:', err);
+    console.error("Get resume error:", err);
   }
 }
 
 /**
  * Calls AI to enhance a prompt.
- * @param {string} prompt
  * @returns {Promise<Object>}
  */
-export async function callAiEnhance(prompt) {
-  console.log('callAiEnhance called', prompt);
+export async function callAiEnhance() {
+  console.log('callAiEnhance called');
   try {
-    const res = await fetch(`${API_BACKEND_URL}/api/ai/enhance-summary`, {
+    const res = await fetch(`${API_BACKEND_URL}/api/resumes/enhance`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ prompt })
+      body: JSON.stringify({
+        summary: currentResume.summary,
+        jobTitle: currentResume.jobTitle,
+        jobDescription: currentResume.jobDescription
+      })
     });
 
+    // console.log(res);
+    if (!res.ok) throw new Error('AI enhancement failed');
+    return await res.json()
+  } catch (err) {
+    console.error('AI enhance error:', err);
+  }
+}
+
+/**
+ * Calls AI to gen bullets. (Gets ran in callbacks set in ui.js)
+ * @returns {Promise<Object>}
+ */
+export async function callAiBullets(sectionType, sectionData) {
+  console.log('callAiEnhance called', sectionType);
+  try {
+    const res = await fetch(`${API_BACKEND_URL}/api/resumes/bullets`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        sectionType: sectionType,
+        data: sectionData,
+        context: {
+          jobTitle: currentResume.jobTitle,
+          jobDescription: currentResume.jobDescription,
+        }
+      })
+    });
+
+    console.log(res);
     if (!res.ok) throw new Error('AI enhancement failed');
     return await res.json();
   } catch (err) {
