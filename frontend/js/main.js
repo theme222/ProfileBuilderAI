@@ -134,5 +134,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   renderSaveButtonAndInfo();
 
   setInterval(evaluateSaveQueue, AUTOSAVE_COOLDOWN * 1000);
+  openModal('preview-modal');
 });
 // UI and API functions are imported globally for this skeleton

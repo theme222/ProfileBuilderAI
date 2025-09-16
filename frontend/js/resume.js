@@ -323,8 +323,7 @@ export function loadResumePreview(resumeData) {
     eduEntry.className = "sidebar-entry";
     eduEntry.innerHTML = `
             <h4>${edu.degree || edu.title || ""}</h4>
-            <p>${edu.school || edu.area || ""}</p>
-            <p>${ edu.start && edu.end ? `${edu.start} - ${edu.end}` : edu.date || "" }</p>
+            <h5>${edu.area || ""}${edu.area && edu.number ? " | ": ""}${ edu.number }</h5>
             <p>${edu.description || ""}</p>
         `;
     educationContainer.appendChild(eduEntry);
