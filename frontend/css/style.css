@@ -16,153 +16,6 @@
   color: var(--neutral);
 }
 
-/* Main container for the A4-ratio preview */
-#resume-output.resume-preview-container {
-  display: flex;
-  width: 100%;
-  height: 100%; /* Adjust height based on controls */
-  background: white;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
-  color: #333;
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-}
-
-/* --- Classic Professional Theme --- */
-.classic-professional {
-  --primary: #2c615f; /* Dark Teal */
-  --secondary: #5f9ea0; /* Lighter Teal */
-  --accent: #a7d8d5; /* Light Teal */
-  --dark: #1b3a3a; /* Darker Teal */
-  --text-color: #333;
-}
-
-.classic-professional .resume-sidebar {
-  background-color: var(--primary); /* Dark Teal */
-  color: white;
-  width: 35%;
-  padding: 1.5rem;
-  font-size: 0.9rem;
-}
-
-.classic-professional .resume-sidebar a {
-  color: var(--accent); /* Light teal for links */
-  text-decoration: none;
-}
-.classic-professional .resume-sidebar a:hover {
-  text-decoration: underline;
-}
-
-.classic-professional .resume-sidebar .resume-section {
-  margin-bottom: 2rem;
-}
-.classic-professional .resume-sidebar .resume-section-title {
-  font-size: 1.1rem;
-  font-weight: bold;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  color: white;
-  padding-bottom: 0.5rem;
-  border-bottom: 1px solid var(--secondary); /* Lighter teal border */
-  margin-bottom: 1rem;
-}
-
-.classic-professional .sidebar-entry h4 {
-  font-size: 1rem;
-  margin: 0.5rem 0 0.2rem 0;
-}
-.classic-professional .sidebar-entry p {
-  margin: 0.2rem 0;
-  opacity: 0.9;
-}
-.classic-professional .skills-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-.classic-professional .skills-list li {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.classic-professional .skills-list li div {
-  width: 1.4in;
-  height: 0.1in;
-  background: var(--dark);
-  border-radius: 20px;
-}
-
-.classic-professional .skills-list li div div {
-  height: 100%;
-  background: var(--accent);
-  border-radius: 20px;
-}
-
-.classic-professional .resume-main {
-  width: 65%;
-  padding: 1.5rem;
-  background: white;
-  margin: 0 0;
-}
-
-.classic-professional .resume-header {
-  text-align: left;
-  margin-bottom: 2rem;
-  border-bottom: 2px solid #333;
-  padding-bottom: 0.5rem;
-  text-align: center;
-  box-shadow: none;
-}
-.classic-professional .resume-header h1 {
-  font-family: 'Georgia', serif;
-  font-size: 2.8rem;
-  margin: 0;
-  letter-spacing: 2px;
-  color: #222;
-}
-.classic-professional .resume-header h2 {
-  font-size: 1.2rem;
-  margin: 0.5rem 0 0 0;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  color: #444;
-}
-
-.classic-professional .resume-main .resume-section-title {
-  font-size: 1.3rem;
-  font-weight: bold;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  color: #333;
-  padding-bottom: 0.5rem;
-  border-bottom: 1px solid #ccc;
-  margin-bottom: 1.5rem;
-}
-
-.classic-professional .main-entry {
-  margin-bottom: 1.5rem;
-}
-.classic-professional .main-entry h4 {
-  font-size: 1.2rem;
-  margin: 0;
-}
-.classic-professional .main-entry h5 {
-  font-size: 1rem;
-  font-style: italic;
-  font-weight: normal;
-  color: #555;
-  margin: 0.2rem 0 0.5rem 0;
-}
-.classic-professional .main-entry ul {
-  list-style-type: disc;
-  padding-left: 1.5rem;
-  margin: 0;
-}
-.classic-professional .main-entry li {
-  margin-bottom: 0.5rem;
-  line-height: 1.4;
-}
-
 :root {
   --base-100: #ffffff;
   --base-200: #f2f2f2;
@@ -259,6 +112,18 @@ textarea:focus,
 select:focus {
   outline: 2px solid var(--primary);
   background: var(--base-100);
+}
+
+.txt-primary {
+  color: var(--primary);
+}
+
+.txt-success {
+  color: var(--success);
+}
+
+.txt-error{
+  color: var(--error);
 }
 
 .btn {
@@ -390,6 +255,8 @@ button .icon {
 .form-actions {
   display: flex;
   justify-content: flex-end;
+  align-items: center;
+  gap: 0.5rem;
   margin-bottom: 0.75rem;
 }
 
@@ -542,10 +409,18 @@ h3 {
 }
 
 #preview-content {
-  height: 11.7in;
+  height: 11in;
   width: 8.3in;
-  aspect-ratio: 1 / 1.414; /* A4 aspect ratio */
 }
+
+#preview-save {
+  display: flex;
+  width: 8.3in;
+  justify-content: center;
+  align-items: center;
+  margin: 4rem 0;
+}
+
 
 #resume-management-area {
   display: flex;

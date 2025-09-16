@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Resume Builder AI</title>
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/resumeStyles/classicProfessional.css">
 </head>
 <body>
   <header>
@@ -107,8 +108,9 @@
         <div id="certification-entries"></div>
         <button type="button" class="btn btn-accent" id="add-certification-btn">Add Certification</button>
       </section>
-      <div class="form-actions">
-        <button type="submit" class="btn btn-primary">Save Resume</button>
+      <div class="form-actions" id="autosave-row">
+        <span id="autosave-info">sadffdsa</span>
+        <button id="autosave-btn" class="btn btn-outline-error">Autosave</button>
       </div>
     </form>
   </main>
@@ -171,6 +173,10 @@
             </div>
           </main>
         </div>
+      </div>
+
+      <div id="preview-save">
+        <button class="btn btn-accent" id="print-btn">Save to PDF / Print</button>
       </div>
 
     </div>

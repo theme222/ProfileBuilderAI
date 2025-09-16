@@ -217,6 +217,47 @@ export function deleteCurrentResume() {
   deleteList.push(currentResume);
   currentResume = null;
   renderForm();
+  renderResumeSelect();
+}
+
+export function printResume() {
+  const content = document.getElementById("preview-content").innerHTML;
+
+  // Open a new popup window
+  const newWindow = window.open("", "", "width=800,height=600");
+
+  // Write the content inside the new window
+  newWindow.document.write(`
+    <html>
+      <head>
+        <title>Print Preview</title>
+        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="css/resumeStyles/classicProfessional.css">
+      </head>
+      <style>
+        @media print {
+          * {
+            -webkit-print-color-adjust: exact !important;
+            color-adjust: exact !important;
+          }
+        }
+      </style>
+      <body>
+        <div id="preview-content">
+          ${content}
+        </div>
+      </body>
+    </html>
+  `);
+
+  // Close the document so it's ready
+  newWindow.document.close();
+  newWindow.onload = () => {
+    // Trigger the print dialog
+    newWindow.print();
+    newWindow.close();
+  };
+
 }
 
 // ***** MANAGEMENT BUTTONS ****** //

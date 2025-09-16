@@ -275,4 +275,9 @@ export function renderResumeSelect() {
       <option value="${index}" ${resume === currentResume ? "selected": ""}>${resume.title}</option>
     `;
   })
+  
+  if (currentResume === null) {
+    resumeSelect.value = "";
+    copyResumeSelect.value = "";
+  }
 }

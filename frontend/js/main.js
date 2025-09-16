@@ -4,8 +4,8 @@ import { getAllUserResumes } from './api.js';
 import { authData } from './auth.js';
 import { AUTOSAVE_COOLDOWN } from './config.js';
 import { renderForm } from './form.js';
-import { Resume, addNewResume, changeResumeTitle, copyFromResume, currentResume, deleteCurrentResume, onSaveResume, resumeList, setCurrentResume, syncCurrentResume } from './resume.js';
-import { evaluateSaveQueue } from './save.js';
+import { Resume, addNewResume, changeResumeTitle, copyFromResume, currentResume, deleteCurrentResume, onSaveResume, printResume, resumeList, setCurrentResume, syncCurrentResume } from './resume.js';
+import { evaluateSaveQueue, renderSaveButtonAndInfo, saveOptions } from './save.js';
 import { openModal, closeModal, addDynamicEntry, renderAuthContent, setupAuthToggle, updateNavbarAuth, renderResumeSelect } from './ui.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -25,10 +25,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     openModal('title-modal');
   });
 
-  document.getElementById("ai-summary-btn").addEventListener('click', () => {
-    enhanceSummary();
-  })
-
   // Close Modals
   document.getElementById('close-preview').addEventListener('click', function() {
     closeModal('preview-modal');
@@ -42,6 +38,23 @@ document.addEventListener('DOMContentLoaded', async () => {
   document.getElementById('close-title').addEventListener('click', async () => {
     closeModal('title-modal');
   });
+
+  document.getElementById("ai-summary-btn").addEventListener('click', () => {
+    enhanceSummary();
+  })
+
+  document.getElementById("autosave-btn").addEventListener('click', () => {
+    if (!authData.isAuthenticated) {
+      alert("Login To Autosave");
+      return;
+    }
+    saveOptions.autosave = !saveOptions.autosave;
+    renderSaveButtonAndInfo();
+  })
+
+  document.getElementById("print-btn").addEventListener('click', () => {
+    printResume();
+  })
 
 
   // Add listeners for dynamic add buttons
@@ -107,6 +120,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       });
     }
     console.log(resumeList);
+    saveOptions.autosave = true;
     if (resumeList.length > 0) 
       setCurrentResume(resumeList[0]);
   }
@@ -117,6 +131,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   renderResumeSelect();
   renderForm();
+  renderSaveButtonAndInfo();
 
   setInterval(evaluateSaveQueue, AUTOSAVE_COOLDOWN * 1000);
 });
