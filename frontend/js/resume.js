@@ -199,7 +199,7 @@ export function addNewResume() {
 
 export function changeResumeTitle(title) {
   currentResume.title = title;
-  console.log(currentResume);
+  currentResume.isSynced = false;
   renderResumeSelect();
 }
 
