@@ -71,7 +71,7 @@ export function getCurrentFormData() {
       if (content) resumeData.certifications.push(content);
     });
 
-  console.log(resumeData);
+  // console.log(resumeData);
   return resumeData;
 }
 
@@ -113,5 +113,5 @@ export function renderForm() {
   if (!currentResume) formElement.classList.add("hidden");
   else formElement.classList.remove("hidden");
 
-  setCurrentFormData(currentResume);
+  if (currentResume) setCurrentFormData(currentResume);
 }

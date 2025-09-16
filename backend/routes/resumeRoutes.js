@@ -16,8 +16,8 @@ router.route('/:id')
   .put(protect, resumeController.updateResume)     
   .delete(protect, resumeController.deleteResume); 
 
-// POST /api/resumes/:id/enhance (AI enhance endpoints)
-router.post('/:id/enhance', protect, aiController.enhanceSummary); 
-router.post('/:id/bullets', protect, aiController.generateBullets); 
+// POST /api/resumes/enhance (AI enhance endpoints)
+router.post('/enhance', aiController.enhanceSummary); 
+router.post('/bullets', aiController.generateBullets); 
 
 module.exports = router;

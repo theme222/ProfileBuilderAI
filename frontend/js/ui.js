@@ -3,6 +3,7 @@ import { getAuthCookie, authData, deleteAuthCookie } from './auth.js';
 import { getUserProfile, register, login } from "./api.js";
 import { currentResume, loadResumePreview, resumeList } from "./resume.js";
 import { getCurrentFormData } from "./form.js";
+import { enhanceBullet } from "./ai.js";
 // ui.js
 
 /**
@@ -120,6 +121,11 @@ export function addDynamicEntry(sectionType, values = {title: "", area: "", numb
   entry.querySelector(".remove-btn").addEventListener("click", () => {
     removeDynamicEntry(entry);
   });
+
+  entry.querySelector("button").addEventListener("click", () => {
+    enhanceBullet(entry, sectionType);
+  })
+
   container.appendChild(entry);
 }
 

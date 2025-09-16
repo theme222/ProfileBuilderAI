@@ -87,7 +87,7 @@ const generateBullets = async (req, res) => {
       prompt = `You are an academic and professional writing assistant. Given the following educational background, rewrite the description.\nContext:\nDegree: ${data.title}\nSchool: ${data.area}\nYear(s): ${data.number}\n\n${tailoringInstruction}${baseInstruction}\n\nOriginal Description: "${data.description}"\n\nEnhanced Description:`;
       break;
 
-    case 'projects':
+    case 'project':
       prompt = `You are a technical project manager and resume expert. Given the following project details, rewrite the description.\nContext:\nProject Title: ${data.title}\nTech Stack: ${data.area}\nYear: ${data.number}\n\n${tailoringInstruction}${baseInstruction}\n\nOriginal Description: "${data.description}"\n\nEnhanced Description:`;
       break;
 

@@ -1,8 +1,11 @@
 // main.js
+import { enhanceSummary } from './ai.js';
 import { getAllUserResumes } from './api.js';
 import { authData } from './auth.js';
+import { AUTOSAVE_COOLDOWN } from './config.js';
 import { renderForm } from './form.js';
-import { Resume, addNewResume, changeResumeTitle, copyFromResume, currentResume, onSaveResume, resumeList, setCurrentResume } from './resume.js';
+import { Resume, addNewResume, changeResumeTitle, copyFromResume, currentResume, deleteCurrentResume, onSaveResume, resumeList, setCurrentResume, syncCurrentResume } from './resume.js';
+import { evaluateSaveQueue } from './save.js';
 import { openModal, closeModal, addDynamicEntry, renderAuthContent, setupAuthToggle, updateNavbarAuth, renderResumeSelect } from './ui.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -21,6 +24,10 @@ document.addEventListener('DOMContentLoaded', async () => {
   document.getElementById('edit-title-btn').addEventListener('click', async () => {
     openModal('title-modal');
   });
+
+  document.getElementById("ai-summary-btn").addEventListener('click', () => {
+    enhanceSummary();
+  })
 
   // Close Modals
   document.getElementById('close-preview').addEventListener('click', function() {
@@ -61,36 +68,47 @@ document.addEventListener('DOMContentLoaded', async () => {
   });
 
   document.getElementById("resume-selector").addEventListener('change', (e) => {
+    syncCurrentResume();
     setCurrentResume(resumeList[parseInt(e.target.value)]);
     console.log(`Changing to ${currentResume}`);
     renderForm();
   });
 
   document.getElementById("new-resume-btn").addEventListener('click', () => {
+    syncCurrentResume();
     addNewResume();
   })
 
   document.getElementById("confirm-title-btn").addEventListener('click', () => {
     changeResumeTitle(document.getElementById("title-input").value);
+    syncCurrentResume();
   })
 
   document.getElementById("confirm-copy-btn").addEventListener('click', () => {
     copyFromResume(document.getElementById('copy-source-selector').value);
+    syncCurrentResume();
   })
 
+  document.getElementById("delete-resume-btn").addEventListener('click', () => {
+    deleteCurrentResume();
+  })
 
   setupAuthToggle();
-  renderAuthContent();
+  await renderAuthContent();
 
   if (authData.isAuthenticated) { // Load user saved resumes
     const loadedResumes = await getAllUserResumes();
+    console.log(loadedResumes);
     if (loadedResumes && Array.isArray(loadedResumes)) {
-      loadedResumes.forEach(element => {
-        resumeList.push(new Resume(element)); // Ensure it is of type Resume.
+      loadedResumes.forEach((element) => {
+        const resumeObj = new Resume(element);
+        resumeObj.isSynced = true;
+        resumeList.push(resumeObj); // Ensure it is of type Resume.
       });
     }
-    // if (resumeList.length > 0) 
-    //   setCurrentResume(resumeList[0]);
+    console.log(resumeList);
+    if (resumeList.length > 0) 
+      setCurrentResume(resumeList[0]);
   }
   else {
     // Create a new resume (But obviously don't need to sync yet)
@@ -99,5 +117,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   renderResumeSelect();
   renderForm();
+
+  setInterval(evaluateSaveQueue, AUTOSAVE_COOLDOWN * 1000);
 });
 // UI and API functions are imported globally for this skeleton
