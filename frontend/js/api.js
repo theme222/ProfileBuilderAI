@@ -116,6 +116,7 @@ export async function createResume(resumeData) {
     const resume = await res.json();
     Resume.copyData(new Resume(resume), resumeData);
     resumeData.isSynced = true;
+    resumeData._id = resume._id;
     return resumeData;
   } catch (err) {
     console.error('Save resume error:', err);
