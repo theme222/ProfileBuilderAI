@@ -83,11 +83,17 @@ main {
   margin: 1rem 0;
 }
 
+.form-grid {
+  display: grid;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  grid-template-columns: repeat(6, 1fr);
+}
+
 .form-row {
   display: flex;
   gap: 1rem;
   margin-bottom: 1rem;
-  flex-wrap: wrap;
   align-items: center;
 }
 
@@ -100,10 +106,11 @@ select {
   font-size: 1rem;
   background: var(--base-200);
   color: var(--neutral);
-  flex: 1 1 200px;
+  flex: 1 1 0px;
 }
 
 textarea {
+  text-overflow: scroll;
   resize: none;
 }
 
@@ -361,6 +368,7 @@ button .icon {
   position: relative;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(4, 1fr);
   grid-gap: 0.4rem;
 }
 
@@ -375,8 +383,12 @@ button .icon {
 
 .dynamic-entry .textarea-container {
   grid-column: span 3;
-  grid-row: span 2;
-  display: flex;
+  grid-row: span 3;
+}
+
+.textarea-container {
+  display: grid;
+  grid-template-columns: 4.5fr 1fr;
   gap: 0.5rem;
 }
 
@@ -431,23 +443,27 @@ h3 {
   background-color: var(--base-200);
   border-bottom: 2px solid var(--base-300);
   border-radius: 8px 8px 0 0; /* Rounded top corners */
-  gap: 1rem;
+  gap: 0.5rem;
 }
 
 #resume-selector {
-  width: 10rem;
+  min-width: 8rem;
   text-overflow: ellipsis;
+  flex: 0;
 }
 
 .management-group {
   display: flex;
+  justify-content: start;
   align-items: center;
+  width: auto;
   gap: 0.5rem
 }
 
 .management-group label {
   font-weight: 600;
-  min-width: 9.3rem;
+  min-width: 6rem;
+  flex: 0.9 0;
   color: var(--neutral);
 }
 
@@ -455,4 +471,14 @@ h3 {
 .btn-success {
   background: var(--success);
   color: #fff;
+}
+
+.span-2 {
+  grid-column: span 2;
+}
+.span-3 {
+  grid-column: span 3;
+}
+.span-6 {
+  grid-column: span 6;
 }

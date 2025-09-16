@@ -1,9 +1,10 @@
 import { upperFirst } from "./misc.js";
 import { getAuthCookie, authData, deleteAuthCookie } from './auth.js';
-import { getUserProfile, register, login } from "./api.js";
-import { currentResume, loadResumePreview, resumeList } from "./resume.js";
-import { getCurrentFormData } from "./form.js";
+import { getUserProfile, register, login, getAllUserResumes } from "./api.js";
+import { addNewResume, currentResume, loadResumePreview, Resume, resumeList, setCurrentResume } from "./resume.js";
+import { getCurrentFormData, renderForm } from "./form.js";
 import { enhanceBullet } from "./ai.js";
+import { renderSaveButtonAndInfo, saveOptions } from "./save.js";
 // ui.js
 
 /**
@@ -113,7 +114,7 @@ export function addDynamicEntry(sectionType, values = {title: "", area: "", numb
       <div class="textarea-container">
       <textarea name="${sectionType}-description" placeholder="${ placeholder.description }">${ values.description }</textarea>
       <button type="button" class="btn btn-outline-secondary btn-ai">
-        <img src="assets/sparkles.svg" alt="AI Enhance" style="width:1.2em;height:1.2em;vertical-align:middle;margin-right:0.4em;">AI Enhance
+        <img src="assets/sparkles.svg" alt="AI Enhance">AI Enhance
       </button>
       </div>
   `;
@@ -183,6 +184,11 @@ export async function renderAuthContent() {
         authData.isAuthenticated = false;
         authData.username = null;
         deleteAuthCookie();
+        renderSaveButtonAndInfo();
+
+        resumeList.length = 0; // Clear list
+        addNewResume();
+
         await renderAuthContent();
       };
       return;
@@ -234,7 +240,24 @@ export async function renderAuthContent() {
 
     console.log("User logged in", user);
     updateNavbarAuth("Loading..."); // will get set on re run
+
     await renderAuthContent();
+
+    const loadedResumes = await getAllUserResumes();
+    console.log(loadedResumes);
+    if (loadedResumes && Array.isArray(loadedResumes)) {
+      loadedResumes.forEach((element) => {
+        const resumeObj = new Resume(element);
+        resumeObj.isSynced = true;
+        resumeList.push(resumeObj); // Ensure it is of type Resume.
+      });
+    }
+    console.log(resumeList);
+    saveOptions.autosave = true;
+    if (resumeList.length > 0) 
+      setCurrentResume(resumeList[0]);
+    renderResumeSelect();
+    renderForm();
 
   };
 }

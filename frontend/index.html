@@ -1,12 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Resume Builder AI</title>
+
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/dynamicstyles.css">
   <link rel="stylesheet" href="css/resumeStyles/classicProfessional.css">
+
 </head>
+
 <body>
   <header>
     <nav class="navbar">
@@ -17,33 +22,35 @@
       </div>
     </nav>
   </header>
-  <main>
 
+  <main>
     <div id="resume-management-area">
+
       <div class="management-group">
-        <label for="resume-selector">Current Resume:</label>
+        <label for="resume-selector" class="hidden-sm">Current Resume:</label>
         <select id="resume-selector" name="resume-selector">
           <option value="none" disabled>Select A Resume</option>
         </select>
       </div>
+
       <div class="management-group">
         <button type="button" id="new-resume-btn" class="btn btn-success" title="New Resume">
-          <span>New</span>
+          <span class="hidden-md">New</span>
           <img src="assets/adddocument.svg" alt="" class="icon">
         </button>
 
         <button type="button" id="edit-title-btn" class="btn btn-warning" title="Edit Resume Title">
-          <span>Edit Title</span>
+          <span class="hidden-md">Edit <span class="hidden-lg">Title</span></span>
           <img src="assets/edit.svg" alt="" class="icon">
         </button>
 
         <button type="button" id="copy-resume-btn" class="btn btn-info" title="Copy Resume">
-          <span>Copy From</span>
+          <span class="hidden-md">Copy <span class="hidden-lg">From</span></span>
           <img src="assets/copy.svg" alt="" class="icon">
         </button>
 
         <button type="button" id="delete-resume-btn" class="btn btn-error" title="Delete Resume">
-          <span>Delete</span>
+          <span class="hidden-md">Delete</span>
           <img src="assets/delete.svg" alt="" class="icon">
         </button>
       </div>
@@ -52,17 +59,13 @@
     <form id="resume-form" class="hidden">
       <section class="section" id="personal-info-section">
         <h2>Personal Info</h2>
-        <div class="form-row">
-          <input type="text" name="name" placeholder="Full Name" required>
-          <input type="email" name="email" placeholder="Email" required>
-        </div>
-        <div class="form-row">
-          <input type="tel" name="phone" placeholder="Phone" required>
-          <input type="url" name="linkedin" placeholder="LinkedIn URL">
-          <input type="url" name="github" placeholder="GitHub URL">
-        </div>
-        <div class="form-row">
-          <input type="text" name="address" placeholder="Address">
+        <div class="form-grid">
+          <input type="text" name="name" placeholder="Full Name" class="span-3 span-1-sm" required>
+          <input type="email" name="email" placeholder="Email" class="span-3 span-1-sm" required>
+          <input type="tel" name="phone" placeholder="Phone" class="span-2 span-1-sm" required>
+          <input type="url" name="linkedin" placeholder="LinkedIn URL" class="span-2 span-1-sm">
+          <input type="url" name="github" placeholder="GitHub URL" class="span-2 span-1-sm">
+          <input type="text" name="address" placeholder="Address" class="span-6 span-1-sm">
         </div>
       </section>
       <section class="section" id="job-description">
@@ -76,7 +79,7 @@
       </section>
       <section class="section" id="summary-section">
         <h2>Summary</h2>
-        <div class="form-row" style="height: 9.5rem">
+        <div class="textarea-container" style="width: 100%">
           <textarea name="summary" rows="6" placeholder="Write a short summary about yourself and what you do."></textarea>
           <button type="button" class="btn btn-outline-secondary btn-ai", id="ai-summary-btn">
             <img src="assets/sparkles.svg" alt="AI Enhance">AI Enhance
@@ -240,5 +243,17 @@
     </div>
   </div>
   <script src="js/main.js" type="module"></script>
+
+  <!-- DEBUG SCREEN SIZE -->
+  <div id="screen-size-display" style="position: fixed; bottom: 10px; right: 10px; background: rgba(0,0,0,0.7); color: white; padding: 5px 10px; border-radius: 5px; font-size: 12px; z-index: 9999;"></div>
+  <script>
+    const updateScreenSize = () => {
+      document.getElementById('screen-size-display').textContent = `${window.innerWidth}px × ${window.innerHeight}px`;
+    };
+    window.addEventListener('resize', updateScreenSize);
+    updateScreenSize();
+  </script>
+  <!-- DEBUG SCREEN SIZE -->
+
 </body>
 </html>
