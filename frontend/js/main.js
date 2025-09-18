@@ -4,7 +4,7 @@ import { getAllUserResumes } from './api.js';
 import { authData } from './auth.js';
 import { AUTOSAVE_COOLDOWN } from './config.js';
 import { renderForm } from './form.js';
-import { Resume, addNewResume, changeResumeTitle, copyFromResume, currentResume, deleteCurrentResume, onSaveResume, printResume, resumeList, setCurrentResume, syncCurrentResume } from './resume.js';
+import { Resume, addNewResume, changeResumeTitle, copyFromResume, currentResume, deleteCurrentResume, printResume, resumeList, setCurrentResume, syncCurrentResume } from './resume.js';
 import { evaluateSaveQueue, renderSaveButtonAndInfo, saveOptions } from './save.js';
 import { openModal, closeModal, addDynamicEntry, renderAuthContent, setupAuthToggle, updateNavbarAuth, renderResumeSelect } from './ui.js';
 
@@ -121,7 +121,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
     console.log(resumeList);
     saveOptions.autosave = true;
-    if (resumeList.length > 0) 
+    if (resumeList.length > 0)
       setCurrentResume(resumeList[0]);
   }
   else {

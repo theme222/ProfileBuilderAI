@@ -55,7 +55,7 @@ export class Resume {
   static copyData(from, to) {
     if (!from) throw new Error("Copy from is not defined");
     if (!to) throw new Error("Copy destination is not defined");
-    
+
     // console.log(from);
     // from and to are both Resume objects
     // to._id = from._id || null;
@@ -212,7 +212,7 @@ export function copyFromResume(index) {
 
 export function deleteCurrentResume() {
   const currResumeIndex = resumeList.indexOf(currentResume);
-  if (currResumeIndex === -1) 
+  if (currResumeIndex === -1)
       throw new Error("Could not find current resume in resume list");
   resumeList.splice(currResumeIndex, 1);
   deleteList.push(currentResume);
@@ -305,12 +305,6 @@ function getListBulletsFromText(text) {
   return `<ul>${bulletList}</ul>`;
 }
 
-export function onSaveResume() {
-  if (!authData.isAuthenticated) alert("Please login to save your resume.");
-
-  const currResumeData = getCurrentResumeData();
-}
-
 export function loadResumePreview(resumeData) {
   // 1. Clear previous content to prevent duplication
   document.getElementById("preview-name").innerHTML = "";
@@ -319,6 +313,9 @@ export function loadResumePreview(resumeData) {
   document.getElementById("preview-education").innerHTML = '<h3 class="resume-section-title">EDUCATION</h3>';
   document.getElementById("preview-skills").innerHTML = '<h3 class="resume-section-title">SKILLS</h3>';
   document.getElementById("preview-work").innerHTML = '<h3 class="resume-section-title">WORK EXPERIENCE</h3>';
+  document.getElementById("preview-projects").innerHTML = '<h3 class="resume-section-title">PROJECTS</h3>';
+  document.getElementById("preview-certifications").innerHTML = '<h3 class="resume-section-title">CERTIFICATIONS</h3>';
+
 
   // 2. Populate Header
   document.getElementById("preview-name").textContent = resumeData.personalInfo.name ? resumeData.personalInfo.name.toUpperCase() : "";
