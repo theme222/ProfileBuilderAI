@@ -84,13 +84,13 @@ cd ProfileBuilderAI
 
 # Install dependencies
 npm install
+```
+#### When porting to your machine, please copy .env.template file to .env and update the values.
 
-# Start backend server
-# Start frontend client
+```bash
+# Start backend server and frontend client
 cd backend
 npm start
-
-
 
 ```
 
@@ -106,11 +106,11 @@ The project is deployed on **AWS EC2**.
 ---
 
 ## 👩‍💻 Team Members – Group 37  
-- **Sira Tongsima** – Project Lead, Frontend Developer  
+- [**Sira Tongsima**](https://github.com/theme222) – Project Lead, Frontend Developer  
 - **Patsakorn Sitpathom** – Backend Developer  
 - **Pasin Plinsut** – Frontend Developer  
 - **Pavaris Pholkaew** – Frontend Developer  
-- **Nontapat Auetrongjit** – Backend Developer, Deployment 
+- [**Nontapat Auetrongjit**](https://github.com/nontaphatfirm) – Backend Developer, Deployment 
 - **Chayapol Champoonta** – Frontend Developer  
 
 ---
