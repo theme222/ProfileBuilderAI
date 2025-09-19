@@ -85,7 +85,7 @@ cd ProfileBuilderAI
 # Install dependencies
 npm install
 ```
-#### When porting to your machine, please copy .env.template file to .env and update the values.
+**When porting to your machine, please copy .env.template file to .env and update the values.**
 
 ```bash
 # Start backend server and frontend client
