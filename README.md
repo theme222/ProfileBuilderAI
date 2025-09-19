@@ -86,13 +86,15 @@ cd ProfileBuilderAI
 npm install
 
 # Start backend server
-npm run server
-
 # Start frontend client
+cd backend
 npm start
+
+
+
 ```
 
-App will run at: **http://localhost:3000/**  
+App will run at: **http://localhost:3001/**  
 
 ---
 
@@ -108,7 +110,7 @@ The project is deployed on **AWS EC2**.
 - **Patsakorn Sitpathom** – Backend Developer  
 - **Pasin Plinsut** – Frontend Developer  
 - **Pavaris Pholkaew** – Frontend Developer  
-- **Nontapat Auetrongjit** – Backend Developer  
+- **Nontapat Auetrongjit** – Backend Developer, Deployment 
 - **Chayapol Champoonta** – Frontend Developer  
 
 ---
