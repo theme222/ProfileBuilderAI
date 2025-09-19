@@ -106,11 +106,11 @@ The project is deployed on **AWS EC2**.
 ---
 
 ## 👩‍💻 Team Members – Group 37  
-- [**Sira Tongsima**](https://github.com/theme222) – Project Lead, Frontend Developer  
+- [**Sira Tongsima**](https://github.com/theme222) – Project Lead, Frontend Developer 
+- [**Nontapat Auetrongjit**](https://github.com/nontaphatfirm) – Backend Developer, Deployment  
 - **Patsakorn Sitpathom** – Backend Developer  
 - **Pasin Plinsut** – Frontend Developer  
 - **Pavaris Pholkaew** – Frontend Developer  
-- [**Nontapat Auetrongjit**](https://github.com/nontaphatfirm) – Backend Developer, Deployment 
 - **Chayapol Champoonta** – Frontend Developer  
 
 ---
